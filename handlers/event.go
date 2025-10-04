@@ -3,6 +3,7 @@ package handlers
 import (
 	"analytics-backend/database"
 	"analytics-backend/models"
+	"analytics-backend/worker"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,5 +17,6 @@ func GetEvent(c *gin.Context) {
 		c.JSON(500, gin.H{"There was an error": err.Error()})
 		return
 	}
+	worker.AddToDatabase()
 	c.JSON(200, gin.H{"event": event})
 }
