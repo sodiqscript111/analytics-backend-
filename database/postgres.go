@@ -25,3 +25,9 @@ func Initdb() {
 func AddToDatabase(event models.Event) error {
 	return DB.Create(&event).Error
 }
+
+func GetEvents(limit int) ([]models.Event, error) {
+	var events []models.Event
+	result := DB.Limit(limit).Order("timestamp desc").Find(&events)
+	return events, result.Error
+}

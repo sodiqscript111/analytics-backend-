@@ -14,6 +14,7 @@ func main() {
 	database.Initdb()
 	router := gin.Default()
 	router.POST("/event", handlers.GetEvent)
+	router.GET("/events", handlers.FetchEvents)
 	router.Run(":8080")
 
 }
