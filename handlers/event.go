@@ -13,10 +13,13 @@ func GetEvent(c *gin.Context) {
 		c.JSON(400, gin.H{"There was an error": err.Error()})
 		return
 	}
+
+	// Push to Redis stream
 	if err := database.AddToStream(event); err != nil {
 		c.JSON(500, gin.H{"There was an error": err.Error()})
 		return
 	}
 	worker.AddToDatabase()
+
 	c.JSON(200, gin.H{"event": event})
 }
