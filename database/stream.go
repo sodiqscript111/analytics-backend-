@@ -14,7 +14,6 @@ var (
 	BlockTimeMs = 300 * time.Millisecond
 )
 
-// AddToStream adds a new event into the Redis stream.
 func AddToStream(stream models.Event) error {
 	_, err := Rdb.XAdd(Ctx, &redis.XAddArgs{
 		Stream: StreamName,
@@ -29,9 +28,7 @@ func AddToStream(stream models.Event) error {
 	return err
 }
 
-// EnsureConsumerGroup creates the consumer group if it doesn’t already exist.
 func EnsureConsumerGroup() error {
-	// XGroupCreateMkStream ensures the stream exists, creates group if not exists
 	err := Rdb.XGroupCreateMkStream(Ctx, StreamName, GroupName, "$").Err()
 	if err != nil && err.Error() != "BUSYGROUP Consumer Group name already exists" {
 		return err
@@ -39,7 +36,6 @@ func EnsureConsumerGroup() error {
 	return nil
 }
 
-// ReadFromGroup reads messages from the Redis stream as part of a consumer group.
 func ReadFromGroup() ([]redis.XMessage, error) {
 	results, err := Rdb.XReadGroup(Ctx, &redis.XReadGroupArgs{
 		Group:    GroupName,
@@ -50,7 +46,7 @@ func ReadFromGroup() ([]redis.XMessage, error) {
 	}).Result()
 
 	if err != nil {
-		// If no messages within block timeout, return empty
+
 		if err == redis.Nil {
 			return []redis.XMessage{}, nil
 		}
@@ -64,7 +60,6 @@ func ReadFromGroup() ([]redis.XMessage, error) {
 	return messages, nil
 }
 
-// AckMessage acknowledges one or more message IDs so Redis can delete them from the PEL.
 func AckMessage(ids ...string) error {
 	if len(ids) == 0 {
 		return nil
@@ -72,7 +67,6 @@ func AckMessage(ids ...string) error {
 	return Rdb.XAck(Ctx, StreamName, GroupName, ids...).Err()
 }
 
-// CheckStreamLength returns the current length of the stream.
 func CheckStreamLength(stream string) (int64, error) {
 	return Rdb.XLen(Ctx, stream).Result()
 }

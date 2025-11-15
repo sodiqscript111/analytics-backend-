@@ -12,12 +12,11 @@ var (
 	Rdb *redis.Client
 )
 
-// InitRedis initializes and tests the Redis connection
 func InitRedis() {
 	Rdb = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379", // change if using Docker container
-		Password: "",               // set if you use a password
-		DB:       0,                // default DB
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
 	})
 
 	// Test connection

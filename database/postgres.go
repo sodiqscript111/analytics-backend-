@@ -26,6 +26,14 @@ func AddToDatabase(event models.Event) error {
 	return DB.Create(&event).Error
 }
 
+func BatchAddToDatabase(events []models.Event) error {
+	if len(events) == 0 {
+		return nil
+	}
+
+	return DB.CreateInBatches(events, 100).Error
+}
+
 func GetEvents(limit int) ([]models.Event, error) {
 	var events []models.Event
 	result := DB.Limit(limit).Order("timestamp desc").Find(&events)
