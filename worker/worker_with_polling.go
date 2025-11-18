@@ -15,11 +15,10 @@ func StartWorker() {
 	for {
 		if err := processBatch(); err != nil {
 			log.Printf("Error processing batch: %v", err)
-			time.Sleep(1 * time.Second) // Brief pause on error
+			time.Sleep(1 * time.Second)
 			continue
 		}
 
-		// Small delay between batches to avoid hammering Redis
 		time.Sleep(100 * time.Millisecond)
 	}
 }

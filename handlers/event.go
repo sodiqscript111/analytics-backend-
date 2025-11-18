@@ -3,7 +3,9 @@ package handlers
 import (
 	"analytics-backend/database"
 	"analytics-backend/models"
+	"context"
 	"github.com/gin-gonic/gin"
+	"time"
 )
 
 func GetEvent(c *gin.Context) {
@@ -13,7 +15,10 @@ func GetEvent(c *gin.Context) {
 		return
 	}
 
-	if err := database.AddToStream(event); err != nil {
+	ctx, cancel := context.WithTimeout(c.Request.Context(), 5*time.Second)
+	defer cancel()
+
+	if err := database.AddToStreamWithContext(ctx, event); err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}

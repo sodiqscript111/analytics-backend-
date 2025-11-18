@@ -7,6 +7,11 @@ import (
 	"context"
 	"github.com/gin-gonic/gin"
 	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 var ctx = context.Background()
@@ -14,17 +19,52 @@ var ctx = context.Background()
 func main() {
 	database.InitRedis()
 	database.Initdb()
+
 	if err := database.EnsureConsumerGroup(); err != nil {
 		log.Fatalf("Failed to create consumer group: %v", err)
 	}
+	log.Println("Consumer group created successfully")
 
-	log.Println("✅ Consumer group created successfully")
-
-	go worker.StartWorker()
+	log.Println("Starting 4 background workers...")
+	for i := 0; i < 4; i++ {
+		go worker.StartAggregatorWorker()
+	}
 
 	router := gin.Default()
+
+	router.MaxMultipartMemory = 32 << 20
+
 	router.POST("/event", handlers.GetEvent)
 	router.GET("/events", handlers.FetchEvents)
-	router.Run(":8080")
 
+	srv := &http.Server{
+		Addr:           ":8080",
+		Handler:        router,
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
+		IdleTimeout:    60 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	go func() {
+		log.Println("Server starting on :8080")
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Server failed to start: %v", err)
+		}
+	}()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+
+	log.Println("Shutting down server...")
+
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	if err := srv.Shutdown(shutdownCtx); err != nil {
+		log.Printf("Server forced to shutdown: %v", err)
+	}
+
+	log.Println("Server exited gracefully")
 }

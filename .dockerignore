@@ -1,0 +1,32 @@
+# Test files
+*_test.go
+benchmark.go
+debug_test.go
+load_test.go
+
+# Terraform
+infra/
+terraform/
+*.tf
+*.tfstate
+*.tfstate.backup
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+README.md
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.local
+
+# Test results
+*_results.txt
+results_*.bin

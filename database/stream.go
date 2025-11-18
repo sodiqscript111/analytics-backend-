@@ -2,7 +2,9 @@ package database
 
 import (
 	"analytics-backend/models"
+	"context"
 	"github.com/redis/go-redis/v9"
+	"log"
 	"time"
 )
 
@@ -22,9 +24,28 @@ func AddToStream(stream models.Event) error {
 			"action":    stream.Action,
 			"element":   stream.Element,
 			"duration":  stream.Duration,
-			"timestamp": stream.Timestamp,
+			"timestamp": stream.Timestamp.Format(time.RFC3339),
 		},
 	}).Result()
+	return err
+}
+
+func AddToStreamWithContext(ctx context.Context, stream models.Event) error {
+	_, err := Rdb.XAdd(ctx, &redis.XAddArgs{
+		Stream: StreamName,
+		Values: map[string]interface{}{
+			"user_id":   stream.UserId,
+			"action":    stream.Action,
+			"element":   stream.Element,
+			"duration":  stream.Duration,
+			"timestamp": stream.Timestamp.Format(time.RFC3339),
+		},
+	}).Result()
+
+	if err != nil {
+		log.Printf("Failed to add to stream: %v", err)
+	}
+
 	return err
 }
 
@@ -43,6 +64,7 @@ func ReadFromGroup() ([]redis.XMessage, error) {
 		Streams:  []string{StreamName, ">"},
 		Count:    BatchSize,
 		Block:    BlockTimeMs,
+		NoAck:    false,
 	}).Result()
 
 	if err != nil {
@@ -50,6 +72,7 @@ func ReadFromGroup() ([]redis.XMessage, error) {
 		if err == redis.Nil {
 			return []redis.XMessage{}, nil
 		}
+		log.Printf("Failed to read from group: %v", err)
 		return nil, err
 	}
 
@@ -64,9 +87,19 @@ func AckMessage(ids ...string) error {
 	if len(ids) == 0 {
 		return nil
 	}
-	return Rdb.XAck(Ctx, StreamName, GroupName, ids...).Err()
+
+	err := Rdb.XAck(Ctx, StreamName, GroupName, ids...).Err()
+	if err != nil {
+		log.Printf("Failed to acknowledge messages: %v", err)
+	}
+
+	return err
 }
 
 func CheckStreamLength(stream string) (int64, error) {
-	return Rdb.XLen(Ctx, stream).Result()
+	length, err := Rdb.XLen(Ctx, stream).Result()
+	if err != nil {
+		log.Printf("Failed to check stream length: %v", err)
+	}
+	return length, err
 }

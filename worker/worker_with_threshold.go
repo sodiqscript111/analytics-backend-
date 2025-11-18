@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	ThresholdCount = 1000             // Write to DB when we have this many events
-	MaxWaitTime    = 30 * time.Second // Or after this much time
+	ThresholdCount = 1000
+	MaxWaitTime    = 30 * time.Second
 )
 
 var (
