@@ -5,13 +5,14 @@ import (
 	"analytics-backend/handlers"
 	"analytics-backend/worker"
 	"context"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 var ctx = context.Background()
@@ -36,6 +37,8 @@ func main() {
 
 	router.POST("/event", handlers.GetEvent)
 	router.GET("/events", handlers.FetchEvents)
+	router.GET("/analytics/sequential", handlers.GetAnalyticsSequential)
+	router.GET("/analytics/mapreduce", handlers.GetAnalyticsMapReduce)
 
 	srv := &http.Server{
 		Addr:           ":8080",

@@ -1,0 +1,6 @@
+.idea/
+.terraform/
+*.exe
+*.log
+*.txt
+tmp/

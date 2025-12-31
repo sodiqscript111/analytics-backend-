@@ -3,20 +3,21 @@ package database
 import (
 	"analytics-backend/models"
 	"context"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 	"log"
 	"time"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
 func Initdb() {
-	dsn := "host=postgres user=postgres password=password dbname=testing port=5432 sslmode=disable"
+	dsn := "host=db user=postgres password=password dbname=testing port=5432 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Printf("Failed to connect to postgres:5432, trying localhost:5432")
+		log.Printf("Failed to connect to db:5432, trying localhost:5432")
 		dsn = "host=localhost user=postgres password=password dbname=testing port=5432 sslmode=disable"
 		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
@@ -30,8 +31,8 @@ func Initdb() {
 		log.Fatalf("Failed to get DB instance: %v", err)
 	}
 
-	sqlDB.SetMaxOpenConns(100)
-	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetMaxOpenConns(200)
+	sqlDB.SetMaxIdleConns(20)
 	sqlDB.SetConnMaxLifetime(time.Hour)
 	sqlDB.SetConnMaxIdleTime(10 * time.Minute)
 
@@ -72,6 +73,13 @@ func BatchAddToDatabaseWithContext(ctx context.Context, events []models.Event) e
 
 func CreateAggregatedEvent(aggEvent *models.AggregatedEvent) error {
 	return DB.Create(aggEvent).Error
+}
+
+func BatchCreateAggregatedEvents(aggEvents []*models.AggregatedEvent) error {
+	if len(aggEvents) == 0 {
+		return nil
+	}
+	return DB.CreateInBatches(aggEvents, 100).Error
 }
 
 func BatchCreateUserEventMaps(userMaps []models.UserEventMap) error {

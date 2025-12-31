@@ -3,16 +3,17 @@ package database
 import (
 	"analytics-backend/models"
 	"context"
-	"github.com/redis/go-redis/v9"
 	"log"
 	"time"
+
+	"github.com/redis/go-redis/v9"
 )
 
 var (
 	StreamName  = "events"
 	GroupName   = "event-group"
 	Consumer    = "worker-1"
-	BatchSize   = int64(100)
+	BatchSize   = int64(1000)
 	BlockTimeMs = 300 * time.Millisecond
 )
 
