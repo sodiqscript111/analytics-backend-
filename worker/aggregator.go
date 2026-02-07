@@ -2,11 +2,14 @@ package worker
 
 import (
 	"analytics-backend/database"
+	"analytics-backend/metrics"
 	"analytics-backend/models"
-	"github.com/redis/go-redis/v9"
+	"encoding/json"
 	"log"
 	"strconv"
 	"time"
+
+	"github.com/redis/go-redis/v9"
 )
 
 const AggregationWindow = 5 * time.Second
@@ -26,9 +29,13 @@ type AggregatedData struct {
 
 func StartAggregatorWorker() {
 	log.Println("Starting aggregator worker...")
+	metrics.ActiveWorkers.Inc()
+	defer metrics.ActiveWorkers.Dec()
 
 	for {
+		metrics.WorkerIterations.Inc()
 		if err := processAggregatedBatch(); err != nil {
+			metrics.EventsFailed.WithLabelValues("aggregation").Inc()
 			log.Printf("Error processing aggregated batch: %v", err)
 			time.Sleep(1 * time.Second)
 			continue
@@ -38,6 +45,7 @@ func StartAggregatorWorker() {
 }
 
 func processAggregatedBatch() error {
+	start := time.Now()
 	result, err := database.ReadFromGroup()
 	if err != nil {
 		return err
@@ -47,13 +55,26 @@ func processAggregatedBatch() error {
 		return nil
 	}
 
+	// Track batch size
+	metrics.AggregationBatchSize.Observe(float64(len(result)))
 	log.Printf("Aggregating batch of %d events", len(result))
 
 	eventGroups := make(map[AggregationKey]*AggregatedData)
 	var messageIDs []string
+	var decodedEvents []models.Event
 
 	for _, msg := range result {
+		// Push raw message JSON to recent feed
+		// We use the raw Values map or marshal the parsed event.
+		// Since we have the parsed event, let's marshal that to have a clean structure.
 		event := parseEvent(msg)
+
+		// Serialize event for the feed
+		if jsonBytes, err := json.Marshal(event); err == nil {
+			database.PushToRecentFeed(database.Ctx, jsonBytes)
+		}
+
+		decodedEvents = append(decodedEvents, event)
 
 		window := event.Timestamp.Truncate(AggregationWindow)
 
@@ -103,25 +124,6 @@ func processAggregatedBatch() error {
 		return err
 	}
 
-	// Second pass: create user maps using the IDs generated from the first pass
-	// We need to match the data back to the saved aggEvents.
-	// Since range over map is random, random iteration order matters if we simply iterated again.
-	// But we constructed aggEvents slice, so we can iterate that if we had linked the data.
-	// However, my previous logic was iterating the map. Let's restart the matching logic.
-
-	// Better approach: Since we can't easily link the random map iteration to the slice unless we stored it.
-	// Let's re-iterate the slice which we can trust has been populated with IDs by GORM.
-	// BUT, we need the original UserIDs for each aggEvent.
-	// Let's use a struct to hold both for the batch process.
-
-	// Refactoring loop above slightly to support this safety.
-
-	// Wait, I cannot easily change the logic in a simple replace tool if I don't use the map.
-	// Let's assume I can iterate `aggEvents` and look up correctly? No, `aggEvents` doesn't have UserIDs.
-	// I need to modify the loop. See below.
-
-	// Let's discard the standard loop and rebuild.
-
 	type BatchItem struct {
 		AggEvent *models.AggregatedEvent
 		UserIDs  []string
@@ -136,8 +138,17 @@ func processAggregatedBatch() error {
 			Window:  data.Window,
 		}
 		batchItems = append(batchItems, BatchItem{AggEvent: aggEvent, UserIDs: data.UserIDs})
+		batchItems = append(batchItems, BatchItem{AggEvent: aggEvent, UserIDs: data.UserIDs})
 		aggEvents = append(aggEvents, aggEvent)
 	}
+
+	// Async insert to ClickHouse for raw analytics
+	go func(events []models.Event) {
+		if err := database.BatchInsertToClickHouse(events); err != nil {
+			log.Printf("Failed to insert batch to ClickHouse: %v", err)
+			metrics.EventsFailed.WithLabelValues("clickhouse_insert").Inc()
+		}
+	}(decodedEvents)
 
 	if err := database.BatchCreateAggregatedEvents(aggEvents); err != nil {
 		log.Printf("Failed to batch create aggregated events: %v", err)
@@ -164,7 +175,15 @@ func processAggregatedBatch() error {
 	}
 
 	log.Printf("Successfully processed and aggregated %d events", len(result))
+
+	// Track processing metrics
+	metrics.EventProcessingDuration.Observe(time.Since(start).Seconds())
+	metrics.EventsProcessed.Add(float64(len(result)))
+	metrics.AggregatedEventsCreated.Add(float64(len(aggEvents)))
+
 	return nil
+}
+
 func parseEvent(msg redis.XMessage) models.Event {
 	values := msg.Values
 

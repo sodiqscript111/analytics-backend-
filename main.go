@@ -3,6 +3,7 @@ package main
 import (
 	"analytics-backend/database"
 	"analytics-backend/handlers"
+	"analytics-backend/metrics"
 	"analytics-backend/worker"
 	"context"
 	"log"
@@ -13,6 +14,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var ctx = context.Background()
@@ -20,6 +22,7 @@ var ctx = context.Background()
 func main() {
 	database.InitRedis()
 	database.Initdb()
+	database.InitClickHouse()
 
 	if err := database.EnsureConsumerGroup(); err != nil {
 		log.Fatalf("Failed to create consumer group: %v", err)
@@ -33,10 +36,18 @@ func main() {
 
 	router := gin.Default()
 
+	// Add Prometheus middleware
+	router.Use(metrics.PrometheusMiddleware())
+
 	router.MaxMultipartMemory = 32 << 20
+
+	// Metrics endpoint for Prometheus scraping
+	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	router.POST("/event", handlers.GetEvent)
 	router.GET("/events", handlers.FetchEvents)
+	router.GET("/events/recent", handlers.GetRecentFeed)
+	router.GET("/analytics/clickhouse", handlers.GetAnalyticsClickHouse)
 	router.GET("/analytics/sequential", handlers.GetAnalyticsSequential)
 	router.GET("/analytics/mapreduce", handlers.GetAnalyticsMapReduce)
 

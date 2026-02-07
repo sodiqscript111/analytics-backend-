@@ -43,3 +43,21 @@ func InitRedis() {
 
 	log.Println("Connected to Redis")
 }
+
+// Recent Feed Helpers
+
+func PushToRecentFeed(ctx context.Context, eventJSON []byte) error {
+	pipe := Rdb.Pipeline()
+
+	// Push to head of list
+	pipe.LPush(ctx, "events:recent", eventJSON)
+	// Keep only top 10
+	pipe.LTrim(ctx, "events:recent", 0, 9)
+
+	_, err := pipe.Exec(ctx)
+	return err
+}
+
+func GetRecentFeed(ctx context.Context) ([]string, error) {
+	return Rdb.LRange(ctx, "events:recent", 0, 9).Result()
+}

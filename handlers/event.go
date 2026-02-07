@@ -2,15 +2,20 @@ package handlers
 
 import (
 	"analytics-backend/database"
+	"analytics-backend/metrics"
 	"analytics-backend/models"
 	"context"
-	"github.com/gin-gonic/gin"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetEvent(c *gin.Context) {
+	metrics.EventsReceived.Inc()
+
 	var event models.Event
 	if err := c.ShouldBind(&event); err != nil {
+		metrics.EventsFailed.WithLabelValues("parse").Inc()
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -19,9 +24,11 @@ func GetEvent(c *gin.Context) {
 	defer cancel()
 
 	if err := database.AddToStreamWithContext(ctx, event); err != nil {
+		metrics.EventsFailed.WithLabelValues("ingest").Inc()
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
+	metrics.EventsIngested.Inc()
 	c.JSON(202, gin.H{"status": "accepted", "event": event})
 }
