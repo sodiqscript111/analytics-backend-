@@ -1,6 +1,7 @@
 package database
 
 import (
+	"analytics-backend/config"
 	"context"
 	"log"
 
@@ -12,33 +13,19 @@ var (
 	Rdb *redis.Client
 )
 
-func InitRedis() {
-
-	addr := "redis:6379"
+func InitRedis(cfg config.RedisConfig) {
 	Rdb = redis.NewClient(&redis.Options{
-		Addr:         addr,
-		Password:     "",
-		DB:           0,
-		PoolSize:     500,
-		MinIdleConns: 50,
+		Addr:         cfg.Addr,
+		Password:     cfg.Password,
+		DB:           cfg.DB,
+		PoolSize:     cfg.PoolSize,
+		MinIdleConns: cfg.MinIdleConns,
 		MaxRetries:   3,
 	})
 
 	_, err := Rdb.Ping(Ctx).Result()
 	if err != nil {
-		log.Printf("Failed to connect to redis:6379, trying localhost:6379")
-		Rdb = redis.NewClient(&redis.Options{
-			Addr:         "localhost:6379",
-			Password:     "",
-			DB:           0,
-			PoolSize:     500,
-			MinIdleConns: 50,
-			MaxRetries:   3,
-		})
-		_, err = Rdb.Ping(Ctx).Result()
-		if err != nil {
-			log.Fatalf("Failed to connect to Redis: %v", err)
-		}
+		log.Fatalf("Failed to connect to Redis at %s: %v", cfg.Addr, err)
 	}
 
 	log.Println("Connected to Redis")
@@ -46,18 +33,34 @@ func InitRedis() {
 
 // Recent Feed Helpers
 
-func PushToRecentFeed(ctx context.Context, eventJSON []byte) error {
+func PushToRecentFeed(ctx context.Context, eventJSON []byte, snowflakeID int64) error {
 	pipe := Rdb.Pipeline()
 
-	// Push to head of list
-	pipe.LPush(ctx, "events:recent", eventJSON)
-	// Keep only top 10
-	pipe.LTrim(ctx, "events:recent", 0, 9)
+	// Add to Sorted Set with Snowflake ID as score
+	// Snowflake IDs are integers that are time-ordered.
+	pipe.ZAdd(ctx, "events:recent", redis.Z{
+		Score:  float64(snowflakeID),
+		Member: eventJSON,
+	})
+
+	// Keep only top 10 most recent events
+	// ZRemRangeByRank removes elements by rank (0-based)
+	// We want to keep the last 10 (highest scores), so we remove from 0 to -11
+	pipe.ZRemRangeByRank(ctx, "events:recent", 0, -11)
 
 	_, err := pipe.Exec(ctx)
+
+	// Handle potential key type mismatch if switching from List to ZSet
+	if err != nil && err.Error() == "WRONGTYPE Operation against a key holding the wrong kind of value" {
+		log.Println("Detected key type mismatch for events:recent, deleting old key...")
+		Rdb.Del(ctx, "events:recent")
+		return PushToRecentFeed(ctx, eventJSON, snowflakeID)
+	}
+
 	return err
 }
 
 func GetRecentFeed(ctx context.Context) ([]string, error) {
-	return Rdb.LRange(ctx, "events:recent", 0, 9).Result()
+	// Get top 10 most recent events (highest scores -> newest events)
+	return Rdb.ZRevRange(ctx, "events:recent", 0, 9).Result()
 }

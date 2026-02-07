@@ -21,6 +21,7 @@ func AddToStream(stream models.Event) error {
 	_, err := Rdb.XAdd(Ctx, &redis.XAddArgs{
 		Stream: StreamName,
 		Values: map[string]interface{}{
+			"id":        stream.ID,
 			"user_id":   stream.UserId,
 			"action":    stream.Action,
 			"element":   stream.Element,
@@ -35,6 +36,7 @@ func AddToStreamWithContext(ctx context.Context, stream models.Event) error {
 	_, err := Rdb.XAdd(ctx, &redis.XAddArgs{
 		Stream: StreamName,
 		Values: map[string]interface{}{
+			"id":        stream.ID,
 			"user_id":   stream.UserId,
 			"action":    stream.Action,
 			"element":   stream.Element,

@@ -4,6 +4,7 @@ import (
 	"analytics-backend/database"
 	"analytics-backend/metrics"
 	"analytics-backend/models"
+	"context"
 	"encoding/json"
 	"log"
 	"strconv"
@@ -70,9 +71,8 @@ func processAggregatedBatch() error {
 		event := parseEvent(msg)
 
 		// Serialize event for the feed
-		if jsonBytes, err := json.Marshal(event); err == nil {
-			database.PushToRecentFeed(database.Ctx, jsonBytes)
-		}
+		// Keep raw message JSON handling if needed, but we will push later
+		// event := parseEvent(msg) - already done below
 
 		decodedEvents = append(decodedEvents, event)
 
@@ -169,6 +169,18 @@ func processAggregatedBatch() error {
 		return err
 	}
 
+	// Push to Recent Feed (Redis ZSet) AFTER successful DB writes
+	// We only need to push the most recent ones if the batch is huge, but pushing all is safer for consistency
+	// The Redis Lua script or ZRemRangeByRank will handle the trimming
+	for _, event := range decodedEvents {
+		if jsonBytes, err := json.Marshal(event); err == nil {
+			// Fire and forget - errors here shouldn't fail the batch
+			go func(ctx context.Context, data []byte, id int64) {
+				_ = database.PushToRecentFeed(ctx, data, id)
+			}(database.Ctx, jsonBytes, event.ID)
+		}
+	}
+
 	if err := database.AckMessage(messageIDs...); err != nil {
 		log.Printf("Failed to ack messages: %v", err)
 		return err
@@ -205,7 +217,13 @@ func parseEvent(msg redis.XMessage) models.Event {
 		timestamp = time.Now()
 	}
 
+	var id int64
+	if idStr, ok := values["id"].(string); ok {
+		id, _ = strconv.ParseInt(idStr, 10, 64)
+	}
+
 	return models.Event{
+		ID:        id,
 		UserId:    userID,
 		Action:    action,
 		Element:   element,

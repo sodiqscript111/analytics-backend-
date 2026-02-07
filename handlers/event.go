@@ -4,6 +4,7 @@ import (
 	"analytics-backend/database"
 	"analytics-backend/metrics"
 	"analytics-backend/models"
+	"analytics-backend/utils"
 	"context"
 	"time"
 
@@ -19,6 +20,9 @@ func GetEvent(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+
+	// Generate Snowflake ID
+	event.ID = utils.GenerateID()
 
 	ctx, cancel := context.WithTimeout(c.Request.Context(), 5*time.Second)
 	defer cancel()

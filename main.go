@@ -1,9 +1,11 @@
 package main
 
 import (
+	"analytics-backend/config"
 	"analytics-backend/database"
 	"analytics-backend/handlers"
 	"analytics-backend/metrics"
+	"analytics-backend/utils"
 	"analytics-backend/worker"
 	"context"
 	"log"
@@ -20,9 +22,16 @@ import (
 var ctx = context.Background()
 
 func main() {
-	database.InitRedis()
-	database.Initdb()
-	database.InitClickHouse()
+	// Load Configuration
+	cfg, err := config.LoadConfig("config.yaml")
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
+
+	database.InitRedis(cfg.Redis)
+	database.Initdb(cfg.Postgres)
+	database.InitClickHouse(cfg.ClickHouse)
+	utils.InitSnowflake(1)
 
 	if err := database.EnsureConsumerGroup(); err != nil {
 		log.Fatalf("Failed to create consumer group: %v", err)

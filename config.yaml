@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+redis:
+  addr: "localhost:6379"
+  password: ""
+  db: 0
+  pool_size: 500
+  min_idle_conns: 50
+
+postgres:
+  host: "localhost"
+  port: 5432
+  user: "postgres"
+  password: "password"
+  dbname: "testing"
+  sslmode: "disable"
+
+clickhouse:
+  addr: 
+    - "localhost:9000"
+  database: "default"
+  username: "default"
+  password: ""

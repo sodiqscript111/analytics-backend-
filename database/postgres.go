@@ -1,8 +1,10 @@
 package database
 
 import (
+	"analytics-backend/config"
 	"analytics-backend/models"
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -12,18 +14,14 @@ import (
 
 var DB *gorm.DB
 
-func Initdb() {
-	dsn := "host=db user=postgres password=password dbname=testing port=5432 sslmode=disable"
+func Initdb(cfg config.PostgresConfig) {
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s",
+		cfg.Host, cfg.User, cfg.Password, cfg.DBName, cfg.Port, cfg.SSLMode)
+
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Printf("Failed to connect to db:5432, trying localhost:5432")
-		dsn = "host=localhost user=postgres password=password dbname=testing port=5432 sslmode=disable"
-		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-
-		if err != nil {
-			log.Fatalf("Failed to connect to Postgres: %v", err)
-		}
+		log.Fatalf("Failed to connect to Postgres: %v", err)
 	}
 
 	sqlDB, err := db.DB()

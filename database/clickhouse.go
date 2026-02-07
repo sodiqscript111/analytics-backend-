@@ -1,6 +1,7 @@
 package database
 
 import (
+	"analytics-backend/config"
 	"analytics-backend/models"
 	"context"
 	"log"
@@ -12,33 +13,20 @@ import (
 
 var CH driver.Conn
 
-func InitClickHouse() {
+func InitClickHouse(cfg config.ClickHouseConfig) {
 	var err error
 	CH, err = clickhouse.Open(&clickhouse.Options{
-		Addr: []string{"clickhouse:9000"},
+		Addr: cfg.Addr,
 		Auth: clickhouse.Auth{
-			Database: "default",
-			Username: "default",
-			Password: "",
+			Database: cfg.Database,
+			Username: cfg.Username,
+			Password: cfg.Password,
 		},
 		Debug: true,
 	})
 
 	if err != nil {
-		// Fallback to localhost for local development
-		log.Printf("Failed to connect to clickhouse:9000, trying localhost:9000")
-		CH, err = clickhouse.Open(&clickhouse.Options{
-			Addr: []string{"localhost:9000"},
-			Auth: clickhouse.Auth{
-				Database: "default",
-				Username: "default",
-				Password: "",
-			},
-			Debug: true,
-		})
-		if err != nil {
-			log.Fatalf("Failed to connect to ClickHouse: %v", err)
-		}
+		log.Fatalf("Failed to connect to ClickHouse: %v", err)
 	}
 
 	if err := CH.Ping(context.Background()); err != nil {
