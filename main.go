@@ -39,8 +39,9 @@ func main() {
 	log.Println("Consumer group created successfully")
 
 	log.Println("Starting 4 background workers...")
+	eventStore := &worker.DefaultEventStore{}
 	for i := 0; i < 4; i++ {
-		go worker.StartAggregatorWorker()
+		go worker.StartAggregatorWorker(eventStore)
 	}
 
 	router := gin.Default()

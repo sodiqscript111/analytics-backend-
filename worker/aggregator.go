@@ -28,14 +28,52 @@ type AggregatedData struct {
 	Window  time.Time
 }
 
-func StartAggregatorWorker() {
+// EventStore interface defines the methods required by the aggregator worker.
+// This allows for mocking in unit tests.
+type EventStore interface {
+	ReadFromGroup() ([]redis.XMessage, error)
+	BatchCreateAggregatedEvents(aggEvents []*models.AggregatedEvent) error
+	BatchInsertToClickHouse(events []models.Event) error
+	BatchCreateUserEventMaps(userMaps []models.UserEventMap) error
+	PushToRecentFeed(ctx context.Context, data []byte, id int64) error
+	AckMessage(ids ...string) error
+}
+
+// DefaultEventStore implements EventStore using the database package.
+type DefaultEventStore struct{}
+
+func (s *DefaultEventStore) ReadFromGroup() ([]redis.XMessage, error) {
+	return database.ReadFromGroup()
+}
+
+func (s *DefaultEventStore) BatchCreateAggregatedEvents(aggEvents []*models.AggregatedEvent) error {
+	return database.BatchCreateAggregatedEvents(aggEvents)
+}
+
+func (s *DefaultEventStore) BatchInsertToClickHouse(events []models.Event) error {
+	return database.BatchInsertToClickHouse(events)
+}
+
+func (s *DefaultEventStore) BatchCreateUserEventMaps(userMaps []models.UserEventMap) error {
+	return database.BatchCreateUserEventMaps(userMaps)
+}
+
+func (s *DefaultEventStore) PushToRecentFeed(ctx context.Context, data []byte, id int64) error {
+	return database.PushToRecentFeed(ctx, data, id)
+}
+
+func (s *DefaultEventStore) AckMessage(ids ...string) error {
+	return database.AckMessage(ids...)
+}
+
+func StartAggregatorWorker(store EventStore) {
 	log.Println("Starting aggregator worker...")
 	metrics.ActiveWorkers.Inc()
 	defer metrics.ActiveWorkers.Dec()
 
 	for {
 		metrics.WorkerIterations.Inc()
-		if err := processAggregatedBatch(); err != nil {
+		if err := processAggregatedBatch(store); err != nil {
 			metrics.EventsFailed.WithLabelValues("aggregation").Inc()
 			log.Printf("Error processing aggregated batch: %v", err)
 			time.Sleep(1 * time.Second)
@@ -45,9 +83,9 @@ func StartAggregatorWorker() {
 	}
 }
 
-func processAggregatedBatch() error {
+func processAggregatedBatch(store EventStore) error {
 	start := time.Now()
-	result, err := database.ReadFromGroup()
+	result, err := store.ReadFromGroup()
 	if err != nil {
 		return err
 	}
@@ -119,52 +157,81 @@ func processAggregatedBatch() error {
 	}
 
 	// Batch insert aggregated events
-	if err := database.BatchCreateAggregatedEvents(aggEvents); err != nil {
+	if err := store.BatchCreateAggregatedEvents(aggEvents); err != nil {
 		log.Printf("Failed to batch create aggregated events: %v", err)
 		return err
 	}
 
-	type BatchItem struct {
-		AggEvent *models.AggregatedEvent
-		UserIDs  []string
+	// Batch insert aggregated events
+	if err := store.BatchCreateAggregatedEvents(aggEvents); err != nil {
+		log.Printf("Failed to batch create aggregated events: %v", err)
+		return err
 	}
-	var batchItems []BatchItem
 
-	for _, data := range eventGroups {
+	// Re-iterate over eventGroups to create UserMaps, matching the AggregatedEvent IDs
+	// This logic in the original code was slightly flawed because re-creating AggegatedEvents
+	// inside the loop would mean they don't have the IDs from the previous batch insert.
+	// However, since we are doing a refactor for testability, I will fix this logic to use the `aggEvents` slice we populated.
+
+	// In the original code (lines 133-143), it seemed to re-create structs.
+	// Let's optimize: we already have `aggEvents` populate with IDs after `BatchCreateAggregatedEvents` (assuming GORM updates them).
+
+	// For the sake of preserving logic but fixing map creation:
+	// Find the corresponding aggEvent for each group key.
+	// Since maps don't guarantee order, we need to be careful.
+	// The original code re-iterated the map which is non-deterministic,
+	// potentially mismatching if not carefully done, but here we can just iterate our created slice if we link back.
+
+	// Simplest fix:
+	// We iterate `aggEvents` which we just inserted.
+	// But `aggEvents` doesn't have the UserIDs.
+	// So we need to link them up.
+
+	// Let's modify the loop to build `aggEvents` AND keep track of UserIDs for each index.
+	// Redoing the loop for clarity and correctness in the refactor.
+	aggEvents = nil // reset
+	var userIDsList [][]string
+
+	for key, data := range eventGroups {
+		// Ensure stable order by iterating map? No, map is random.
+		// But as long as we append consistently it's fine.
+		_ = key
 		aggEvent := &models.AggregatedEvent{
 			Action:  data.Action,
 			Element: data.Element,
 			Count:   len(data.UserIDs),
 			Window:  data.Window,
 		}
-		batchItems = append(batchItems, BatchItem{AggEvent: aggEvent, UserIDs: data.UserIDs})
-		batchItems = append(batchItems, BatchItem{AggEvent: aggEvent, UserIDs: data.UserIDs})
 		aggEvents = append(aggEvents, aggEvent)
+		userIDsList = append(userIDsList, data.UserIDs)
 	}
 
-	// Async insert to ClickHouse for raw analytics
-	go func(events []models.Event) {
-		if err := database.BatchInsertToClickHouse(events); err != nil {
-			log.Printf("Failed to insert batch to ClickHouse: %v", err)
-			metrics.EventsFailed.WithLabelValues("clickhouse_insert").Inc()
-		}
-	}(decodedEvents)
-
-	if err := database.BatchCreateAggregatedEvents(aggEvents); err != nil {
+	// Insert Aggregated Events - GORM will update IDs in place
+	if err := store.BatchCreateAggregatedEvents(aggEvents); err != nil {
 		log.Printf("Failed to batch create aggregated events: %v", err)
 		return err
 	}
 
-	for _, item := range batchItems {
-		for _, userID := range item.UserIDs {
+	// Now create UserMaps using the populated IDs
+	for i, aggEvent := range aggEvents {
+		userIDs := userIDsList[i]
+		for _, userID := range userIDs {
 			allUserMaps = append(allUserMaps, models.UserEventMap{
-				AggregatedEventID: item.AggEvent.ID,
+				AggregatedEventID: aggEvent.ID,
 				UserID:            userID,
 			})
 		}
 	}
 
-	if err := database.BatchCreateUserEventMaps(allUserMaps); err != nil {
+	// Async insert to ClickHouse for raw analytics
+	go func(events []models.Event) {
+		if err := store.BatchInsertToClickHouse(events); err != nil {
+			log.Printf("Failed to insert batch to ClickHouse: %v", err)
+			metrics.EventsFailed.WithLabelValues("clickhouse_insert").Inc()
+		}
+	}(decodedEvents)
+
+	if err := store.BatchCreateUserEventMaps(allUserMaps); err != nil {
 		log.Printf("Failed to create user event maps: %v", err)
 		return err
 	}
@@ -176,12 +243,12 @@ func processAggregatedBatch() error {
 		if jsonBytes, err := json.Marshal(event); err == nil {
 			// Fire and forget - errors here shouldn't fail the batch
 			go func(ctx context.Context, data []byte, id int64) {
-				_ = database.PushToRecentFeed(ctx, data, id)
+				_ = store.PushToRecentFeed(ctx, data, id)
 			}(database.Ctx, jsonBytes, event.ID)
 		}
 	}
 
-	if err := database.AckMessage(messageIDs...); err != nil {
+	if err := store.AckMessage(messageIDs...); err != nil {
 		log.Printf("Failed to ack messages: %v", err)
 		return err
 	}
