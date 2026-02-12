@@ -20,6 +20,7 @@ WORKDIR /app
 
 
 COPY --from=builder /app/main .
+COPY config.docker.yaml ./config.yaml
 
 EXPOSE 8080
 CMD ["./main"]

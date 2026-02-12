@@ -28,8 +28,6 @@ type AggregatedData struct {
 	Window  time.Time
 }
 
-// EventStore interface defines the methods required by the aggregator worker.
-// This allows for mocking in unit tests.
 type EventStore interface {
 	ReadFromGroup() ([]redis.XMessage, error)
 	BatchCreateAggregatedEvents(aggEvents []*models.AggregatedEvent) error
@@ -39,7 +37,6 @@ type EventStore interface {
 	AckMessage(ids ...string) error
 }
 
-// DefaultEventStore implements EventStore using the database package.
 type DefaultEventStore struct{}
 
 func (s *DefaultEventStore) ReadFromGroup() ([]redis.XMessage, error) {
@@ -79,7 +76,6 @@ func StartAggregatorWorker(store EventStore) {
 			time.Sleep(1 * time.Second)
 			continue
 		}
-		// Removed artificial sleep to maximize throughput
 	}
 }
 
@@ -94,7 +90,6 @@ func processAggregatedBatch(store EventStore) error {
 		return nil
 	}
 
-	// Track batch size
 	metrics.AggregationBatchSize.Observe(float64(len(result)))
 	log.Printf("Aggregating batch of %d events", len(result))
 
@@ -103,14 +98,7 @@ func processAggregatedBatch(store EventStore) error {
 	var decodedEvents []models.Event
 
 	for _, msg := range result {
-		// Push raw message JSON to recent feed
-		// We use the raw Values map or marshal the parsed event.
-		// Since we have the parsed event, let's marshal that to have a clean structure.
 		event := parseEvent(msg)
-
-		// Serialize event for the feed
-		// Keep raw message JSON handling if needed, but we will push later
-		// event := parseEvent(msg) - already done below
 
 		decodedEvents = append(decodedEvents, event)
 
@@ -139,63 +127,12 @@ func processAggregatedBatch(store EventStore) error {
 	log.Printf("Aggregated %d events into %d unique action-element pairs",
 		len(result), len(eventGroups))
 
-	var aggEvents []*models.AggregatedEvent
 	var allUserMaps []models.UserEventMap
 
-	// First pass: create all aggregated events
-	for _, data := range eventGroups {
-		aggEvent := &models.AggregatedEvent{
-			Action:  data.Action,
-			Element: data.Element,
-			Count:   len(data.UserIDs),
-			Window:  data.Window,
-		}
-		aggEvents = append(aggEvents, aggEvent)
-
-		// Store UserIDs temporarily with the struct pointer to map later
-		// Note: The ID will be populated after insertion if using GORM with returning (Postgres Default)
-	}
-
-	// Batch insert aggregated events
-	if err := store.BatchCreateAggregatedEvents(aggEvents); err != nil {
-		log.Printf("Failed to batch create aggregated events: %v", err)
-		return err
-	}
-
-	// Batch insert aggregated events
-	if err := store.BatchCreateAggregatedEvents(aggEvents); err != nil {
-		log.Printf("Failed to batch create aggregated events: %v", err)
-		return err
-	}
-
-	// Re-iterate over eventGroups to create UserMaps, matching the AggregatedEvent IDs
-	// This logic in the original code was slightly flawed because re-creating AggegatedEvents
-	// inside the loop would mean they don't have the IDs from the previous batch insert.
-	// However, since we are doing a refactor for testability, I will fix this logic to use the `aggEvents` slice we populated.
-
-	// In the original code (lines 133-143), it seemed to re-create structs.
-	// Let's optimize: we already have `aggEvents` populate with IDs after `BatchCreateAggregatedEvents` (assuming GORM updates them).
-
-	// For the sake of preserving logic but fixing map creation:
-	// Find the corresponding aggEvent for each group key.
-	// Since maps don't guarantee order, we need to be careful.
-	// The original code re-iterated the map which is non-deterministic,
-	// potentially mismatching if not carefully done, but here we can just iterate our created slice if we link back.
-
-	// Simplest fix:
-	// We iterate `aggEvents` which we just inserted.
-	// But `aggEvents` doesn't have the UserIDs.
-	// So we need to link them up.
-
-	// Let's modify the loop to build `aggEvents` AND keep track of UserIDs for each index.
-	// Redoing the loop for clarity and correctness in the refactor.
-	aggEvents = nil // reset
+	var aggEvents []*models.AggregatedEvent
 	var userIDsList [][]string
 
-	for key, data := range eventGroups {
-		// Ensure stable order by iterating map? No, map is random.
-		// But as long as we append consistently it's fine.
-		_ = key
+	for _, data := range eventGroups {
 		aggEvent := &models.AggregatedEvent{
 			Action:  data.Action,
 			Element: data.Element,
@@ -206,13 +143,11 @@ func processAggregatedBatch(store EventStore) error {
 		userIDsList = append(userIDsList, data.UserIDs)
 	}
 
-	// Insert Aggregated Events - GORM will update IDs in place
 	if err := store.BatchCreateAggregatedEvents(aggEvents); err != nil {
 		log.Printf("Failed to batch create aggregated events: %v", err)
 		return err
 	}
 
-	// Now create UserMaps using the populated IDs
 	for i, aggEvent := range aggEvents {
 		userIDs := userIDsList[i]
 		for _, userID := range userIDs {
@@ -223,7 +158,6 @@ func processAggregatedBatch(store EventStore) error {
 		}
 	}
 
-	// Async insert to ClickHouse for raw analytics
 	go func(events []models.Event) {
 		if err := store.BatchInsertToClickHouse(events); err != nil {
 			log.Printf("Failed to insert batch to ClickHouse: %v", err)
@@ -236,12 +170,8 @@ func processAggregatedBatch(store EventStore) error {
 		return err
 	}
 
-	// Push to Recent Feed (Redis ZSet) AFTER successful DB writes
-	// We only need to push the most recent ones if the batch is huge, but pushing all is safer for consistency
-	// The Redis Lua script or ZRemRangeByRank will handle the trimming
 	for _, event := range decodedEvents {
 		if jsonBytes, err := json.Marshal(event); err == nil {
-			// Fire and forget - errors here shouldn't fail the batch
 			go func(ctx context.Context, data []byte, id int64) {
 				_ = store.PushToRecentFeed(ctx, data, id)
 			}(database.Ctx, jsonBytes, event.ID)
@@ -255,7 +185,6 @@ func processAggregatedBatch(store EventStore) error {
 
 	log.Printf("Successfully processed and aggregated %d events", len(result))
 
-	// Track processing metrics
 	metrics.EventProcessingDuration.Observe(time.Since(start).Seconds())
 	metrics.EventsProcessed.Add(float64(len(result)))
 	metrics.AggregatedEventsCreated.Add(float64(len(aggEvents)))
