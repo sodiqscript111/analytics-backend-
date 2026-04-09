@@ -2,7 +2,7 @@ server:
   port: 8080
 
 redis:
-  addr: "localhost:6379"
+  addr: "localhost:6380"
   password: ""
   db: 0
   pool_size: 500
@@ -10,7 +10,7 @@ redis:
 
 postgres:
   host: "localhost"
-  port: 5432
+  port: 5434
   user: "postgres"
   password: "password"
   dbname: "testing"
@@ -20,5 +20,5 @@ clickhouse:
   addr: 
     - "localhost:9000"
   database: "default"
-  username: "default"
-  password: ""
+  username: "testing"
+  password: "testing"

@@ -8,6 +8,7 @@ import (
 	"analytics-backend/utils"
 	"analytics-backend/worker"
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -39,12 +40,25 @@ func main() {
 	log.Println("Consumer group created successfully")
 
 	log.Println("Starting 4 background workers...")
-	eventStore := &worker.DefaultEventStore{}
 	for i := 0; i < 4; i++ {
-		go worker.StartAggregatorWorker(eventStore)
+		workerName := fmt.Sprintf("worker-%d", i+1)
+		eventStore := &worker.DefaultEventStore{Consumer: workerName}
+		go worker.StartAggregatorWorker(workerName, eventStore)
 	}
 
 	router := gin.Default()
+
+	// CORS middleware — allow frontend to reach the API
+	router.Use(func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		c.Header("Access-Control-Allow-Headers", "Content-Type")
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+		c.Next()
+	})
 
 	// Add Prometheus middleware
 	router.Use(metrics.PrometheusMiddleware())
@@ -57,6 +71,7 @@ func main() {
 	router.POST("/event", handlers.GetEvent)
 	router.GET("/events", handlers.FetchEvents)
 	router.GET("/events/recent", handlers.GetRecentFeed)
+	router.GET("/events/stream", handlers.GetEventsStream)
 	router.GET("/analytics/clickhouse", handlers.GetAnalyticsClickHouse)
 	router.GET("/analytics/sequential", handlers.GetAnalyticsSequential)
 	router.GET("/analytics/mapreduce", handlers.GetAnalyticsMapReduce)

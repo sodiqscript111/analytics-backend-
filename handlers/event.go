@@ -23,6 +23,9 @@ func GetEvent(c *gin.Context) {
 
 	// Generate Snowflake ID
 	event.ID = utils.GenerateID()
+	if event.Timestamp.IsZero() {
+		event.Timestamp = time.Now()
+	}
 
 	ctx, cancel := context.WithTimeout(c.Request.Context(), 5*time.Second)
 	defer cancel()

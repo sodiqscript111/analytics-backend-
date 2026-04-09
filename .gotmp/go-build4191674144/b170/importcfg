@@ -1,0 +1,18 @@
+# import config
+packagefile crypto=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\44\4447618102fffd314baddb23cd8283f8d66d53041adf24fe0a3744e6ed39d2d5-d
+packagefile crypto/internal/boring=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b082\_pkg_.a
+packagefile crypto/internal/boring/bbig=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b140\_pkg_.a
+packagefile crypto/internal/fips140/bigmod=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\73\73257d1745400f7ee5226c4e5c6a13cc01ad24e4caee47d1081f5914201d2ccd-d
+packagefile crypto/internal/fips140/rsa=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b171\_pkg_.a
+packagefile crypto/internal/fips140hash=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e3\e38721e2688863da53aaa11cd48bd09268ba1863dc4b0f82dce7f6601dac5aeb-d
+packagefile crypto/internal/fips140only=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\2d\2d7250138c2bca616e87b317ee49b90f021398dadf4f0fb5014159fd43ea5d43-d
+packagefile crypto/internal/randutil=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\02\02b979469e8791b8446c1a4c174e0daf7577ab198222ab62557a1042e45182b9-d
+packagefile crypto/rand=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b155\_pkg_.a
+packagefile crypto/subtle=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\75\75829de1873c495f92935956a88d2d89fc889b60b5cbc02083a32879501a1f90-d
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
+packagefile hash=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\77\77ce3c2bd9d2a1450a324643910a82bd2215481716073ffaa56d26bf67406524-d
+packagefile internal/godebug=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\58\58d809561a30f0bcaaebcc3e890844b364c2349e87b01f208dc94a052ab1f8d6-d
+packagefile io=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\dd\dd8d6a3c540e927692bd3f654fe43df87f9623763d4b149c75a28e448ff5133d-d
+packagefile math=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f9\f9c25e434188f7e6f66622987d09aefa920889f848c60880a6e6e632be0a31d1-d
+packagefile math/big=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b139\_pkg_.a

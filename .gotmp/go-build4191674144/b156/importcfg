@@ -1,0 +1,6 @@
+# import config
+packagefile crypto/internal/fips140/hkdf=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\d0\d0ead49065256281b637cd15ef54944f01c6aca43a13c408fb607fa17b864e53-d
+packagefile crypto/internal/fips140hash=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e3\e38721e2688863da53aaa11cd48bd09268ba1863dc4b0f82dce7f6601dac5aeb-d
+packagefile crypto/internal/fips140only=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\2d\2d7250138c2bca616e87b317ee49b90f021398dadf4f0fb5014159fd43ea5d43-d
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile hash=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\77\77ce3c2bd9d2a1450a324643910a82bd2215481716073ffaa56d26bf67406524-d

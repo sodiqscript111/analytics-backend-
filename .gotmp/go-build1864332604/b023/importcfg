@@ -1,0 +1,8 @@
+# import config
+packagefile internal/abi=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b006\_pkg_.a
+packagefile internal/asan=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b024\_pkg_.a
+packagefile internal/goarch=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b007\_pkg_.a
+packagefile internal/msan=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b025\_pkg_.a
+packagefile internal/race=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b026\_pkg_.a
+packagefile internal/runtime/math=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b027\_pkg_.a
+packagefile internal/runtime/sys=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b028\_pkg_.a

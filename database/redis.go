@@ -43,10 +43,8 @@ func PushToRecentFeed(ctx context.Context, eventJSON []byte, snowflakeID int64) 
 		Member: eventJSON,
 	})
 
-	// Keep only top 10 most recent events
-	// ZRemRangeByRank removes elements by rank (0-based)
-	// We want to keep the last 10 (highest scores), so we remove from 0 to -11
-	pipe.ZRemRangeByRank(ctx, "events:recent", 0, -11)
+	// Keep only top 50 most recent events
+	pipe.ZRemRangeByRank(ctx, "events:recent", 0, -51)
 
 	_, err := pipe.Exec(ctx)
 
@@ -61,6 +59,10 @@ func PushToRecentFeed(ctx context.Context, eventJSON []byte, snowflakeID int64) 
 }
 
 func GetRecentFeed(ctx context.Context) ([]string, error) {
-	// Get top 10 most recent events (highest scores -> newest events)
-	return Rdb.ZRevRange(ctx, "events:recent", 0, 9).Result()
+	// Get top 50 most recent events (highest scores -> newest events)
+	return Rdb.ZRevRange(ctx, "events:recent", 0, 49).Result()
+}
+
+func PublishEvent(ctx context.Context, eventJSON []byte) error {
+	return Rdb.Publish(ctx, "events:stream", eventJSON).Err()
 }

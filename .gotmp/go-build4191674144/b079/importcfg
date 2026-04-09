@@ -1,0 +1,5 @@
+# import config
+packagefile crypto=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\44\4447618102fffd314baddb23cd8283f8d66d53041adf24fe0a3744e6ed39d2d5-d
+packagefile crypto/internal/boring=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b082\_pkg_.a
+packagefile crypto/internal/fips140/sha256=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\70\7019f01b2c4f5a47ad801b7f380f2ef5f49212d8866ce2811b8096574aa244cd-d
+packagefile hash=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\77\77ce3c2bd9d2a1450a324643910a82bd2215481716073ffaa56d26bf67406524-d

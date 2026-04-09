@@ -1,0 +1,4 @@
+# import config
+packagefile crypto/internal/fips140/sha3=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b094\_pkg_.a
+packagefile crypto/sha3=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b148\_pkg_.a
+packagefile hash=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b081\_pkg_.a

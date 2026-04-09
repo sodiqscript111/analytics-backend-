@@ -1,0 +1,6 @@
+# import config
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b004\_pkg_.a
+packagefile internal/byteorder=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b013\_pkg_.a
+packagefile internal/chacha8rand=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b014\_pkg_.a
+packagefile math=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b060\_pkg_.a
+packagefile math/bits=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b051\_pkg_.a

@@ -1,0 +1,4 @@
+# import config
+packagefile github.com/jackc/pgx/v5/internal/iobufpool=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b285\_pkg_.a
+packagefile io=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b046\_pkg_.a
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b036\_pkg_.a

@@ -1,0 +1,8 @@
+# import config
+packagefile context=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\b4\b4183b72b01ee34c104f2643ea9dc36e464f79f396a677679e635b2811db203c-d
+packagefile crypto/tls=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b128\_pkg_.a
+packagefile internal/nettrace=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\97\970785b92c49297c0fdcf978d48641acc82634b726809ab799f6feaf6009bf4f-d
+packagefile net=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b180\_pkg_.a
+packagefile net/textproto=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b263\_pkg_.a
+packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
+packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c0\c0551600e2e3bb397c29fcf9657ed0b6e5230061afaccb8926d5c4dfa35125c7-d

@@ -1,0 +1,6 @@
+# import config
+packagefile internal/race=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f4\f49943a547fe7e8a5cb8f0cb66869478f16fd8d271a511990876851b76610cd4-d
+packagefile internal/sync=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b037\_pkg_.a
+packagefile internal/synctest=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\38\38ba4777be91de2a6b948e9436259233b11df47203c7ffffc0ff8b104babadb8-d
+packagefile runtime=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b010\_pkg_.a
+packagefile sync/atomic=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b038\_pkg_.a

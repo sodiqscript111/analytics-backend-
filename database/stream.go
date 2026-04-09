@@ -12,24 +12,12 @@ import (
 var (
 	StreamName  = "events"
 	GroupName   = "event-group"
-	Consumer    = "worker-1"
 	BatchSize   = int64(1000)
 	BlockTimeMs = 300 * time.Millisecond
 )
 
 func AddToStream(stream models.Event) error {
-	_, err := Rdb.XAdd(Ctx, &redis.XAddArgs{
-		Stream: StreamName,
-		Values: map[string]interface{}{
-			"id":        stream.ID,
-			"user_id":   stream.UserId,
-			"action":    stream.Action,
-			"element":   stream.Element,
-			"duration":  stream.Duration,
-			"timestamp": stream.Timestamp.Format(time.RFC3339),
-		},
-	}).Result()
-	return err
+	return AddToStreamWithContext(Ctx, stream)
 }
 
 func AddToStreamWithContext(ctx context.Context, stream models.Event) error {
@@ -41,7 +29,7 @@ func AddToStreamWithContext(ctx context.Context, stream models.Event) error {
 			"action":    stream.Action,
 			"element":   stream.Element,
 			"duration":  stream.Duration,
-			"timestamp": stream.Timestamp.Format(time.RFC3339),
+			"timestamp": stream.Timestamp.Format(time.RFC3339Nano),
 		},
 	}).Result()
 
@@ -60,10 +48,10 @@ func EnsureConsumerGroup() error {
 	return nil
 }
 
-func ReadFromGroup() ([]redis.XMessage, error) {
+func ReadFromGroup(consumer string) ([]redis.XMessage, error) {
 	results, err := Rdb.XReadGroup(Ctx, &redis.XReadGroupArgs{
 		Group:    GroupName,
-		Consumer: Consumer,
+		Consumer: consumer,
 		Streams:  []string{StreamName, ">"},
 		Count:    BatchSize,
 		Block:    BlockTimeMs,

@@ -1,0 +1,14 @@
+# import config
+packagefile bytes=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f0\f0f9d526fd399ece393495cbca881da350bf4fb26d83b4584dfd0fc6c6dc106a-d
+packagefile cmp=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\bd\bd67f655b73f22f644f2b3a1c2f8e82f3413889caf1371a56072d02b8b19b9b5-d
+packagefile encoding/json=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b107\_pkg_.a
+packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
+packagefile go.opentelemetry.io/otel/attribute/internal=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\36\3663bd8db7a9a4f80d8106f7d771e5dd498f7642944d24cf9481dc1b8506d827-d
+packagefile go.opentelemetry.io/otel/attribute/internal/xxhash=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b236\_pkg_.a
+packagefile math=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f9\f9c25e434188f7e6f66622987d09aefa920889f848c60880a6e6e632be0a31d1-d
+packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
+packagefile slices=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f3\f33fab88be41c18734cebd4f4c9af5fa5409c36e4803f16ec8f86bb1153d902f-d
+packagefile sort=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c8\c83b16b45b0c0680efdd365194e1609507e3a01feed17a7c803fd04c0c881bb2-d
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d
+packagefile sync/atomic=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\61\6132922bcaca474f8adaa4a75fb1d759e745edba05aea1cb162595da15eba717-d

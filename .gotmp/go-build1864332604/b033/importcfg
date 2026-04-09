@@ -1,0 +1,7 @@
+# import config
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b004\_pkg_.a
+packagefile internal/syscall/windows/sysdll=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b034\_pkg_.a
+packagefile runtime=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b010\_pkg_.a
+packagefile structs=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b035\_pkg_.a
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b036\_pkg_.a
+packagefile syscall=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b040\_pkg_.a

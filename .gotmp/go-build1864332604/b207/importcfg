@@ -1,0 +1,7 @@
+# import config
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b004\_pkg_.a
+packagefile internal/bytealg=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b011\_pkg_.a
+packagefile internal/stringslite=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b030\_pkg_.a
+packagefile io=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b046\_pkg_.a
+packagefile io/fs=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b045\_pkg_.a
+packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b052\_pkg_.a

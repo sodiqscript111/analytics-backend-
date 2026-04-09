@@ -1,0 +1,15 @@
+# import config
+packagefile context=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\b4\b4183b72b01ee34c104f2643ea9dc36e464f79f396a677679e635b2811db203c-d
+packagefile database/sql/driver=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b206\_pkg_.a
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
+packagefile gorm.io/gorm/utils=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b314\_pkg_.a
+packagefile io=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\dd\dd8d6a3c540e927692bd3f654fe43df87f9623763d4b149c75a28e448ff5133d-d
+packagefile log=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b193\_pkg_.a
+packagefile os=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\24\24d2f90ded35e12caf40b55bbb600a5ba661275ad0182e13eb9cd22e15a1b23f-d
+packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
+packagefile regexp=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c6\c6a33f88a8982fd4bc8ad69c12a463b4ccb3aa2ae3e9f342bb8711182490c079-d
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
+packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d
+packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c0\c0551600e2e3bb397c29fcf9657ed0b6e5230061afaccb8926d5c4dfa35125c7-d
+packagefile unicode=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f7\f7551527539df2579c99c859af19989b740a0cf02442a713011595cd20626209-d

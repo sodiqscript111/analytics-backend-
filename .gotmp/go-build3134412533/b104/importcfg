@@ -1,0 +1,4 @@
+# import config
+packagefile crypto/internal/fips140/subtle=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b095\_pkg_.a
+packagefile internal/runtime/sys=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b028\_pkg_.a
+packagefile runtime=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b010\_pkg_.a

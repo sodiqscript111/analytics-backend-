@@ -18,7 +18,7 @@ const AggregationWindow = 5 * time.Second
 type AggregationKey struct {
 	Action  string
 	Element string
-	Window  string
+	Window  time.Time
 }
 
 type AggregatedData struct {
@@ -30,17 +30,25 @@ type AggregatedData struct {
 
 type EventStore interface {
 	ReadFromGroup() ([]redis.XMessage, error)
+	BatchAddToDatabase(events []models.Event) error
 	BatchCreateAggregatedEvents(aggEvents []*models.AggregatedEvent) error
 	BatchInsertToClickHouse(events []models.Event) error
 	BatchCreateUserEventMaps(userMaps []models.UserEventMap) error
 	PushToRecentFeed(ctx context.Context, data []byte, id int64) error
+	PublishEvent(ctx context.Context, data []byte) error
 	AckMessage(ids ...string) error
 }
 
-type DefaultEventStore struct{}
+type DefaultEventStore struct {
+	Consumer string
+}
 
 func (s *DefaultEventStore) ReadFromGroup() ([]redis.XMessage, error) {
-	return database.ReadFromGroup()
+	return database.ReadFromGroup(s.Consumer)
+}
+
+func (s *DefaultEventStore) BatchAddToDatabase(events []models.Event) error {
+	return database.BatchAddToDatabase(events)
 }
 
 func (s *DefaultEventStore) BatchCreateAggregatedEvents(aggEvents []*models.AggregatedEvent) error {
@@ -63,8 +71,12 @@ func (s *DefaultEventStore) AckMessage(ids ...string) error {
 	return database.AckMessage(ids...)
 }
 
-func StartAggregatorWorker(store EventStore) {
-	log.Println("Starting aggregator worker...")
+func (s *DefaultEventStore) PublishEvent(ctx context.Context, data []byte) error {
+	return database.PublishEvent(ctx, data)
+}
+
+func StartAggregatorWorker(workerName string, store EventStore) {
+	log.Printf("Starting aggregator worker %s...", workerName)
 	metrics.ActiveWorkers.Inc()
 	defer metrics.ActiveWorkers.Dec()
 
@@ -107,7 +119,7 @@ func processAggregatedBatch(store EventStore) error {
 		key := AggregationKey{
 			Action:  event.Action,
 			Element: event.Element,
-			Window:  window.Format(time.RFC3339),
+			Window:  window,
 		}
 
 		if existing, found := eventGroups[key]; found {
@@ -148,6 +160,11 @@ func processAggregatedBatch(store EventStore) error {
 		return err
 	}
 
+	if err := store.BatchAddToDatabase(decodedEvents); err != nil {
+		log.Printf("Failed to batch insert raw events to Postgres: %v", err)
+		return err
+	}
+
 	for i, aggEvent := range aggEvents {
 		userIDs := userIDsList[i]
 		for _, userID := range userIDs {
@@ -158,12 +175,11 @@ func processAggregatedBatch(store EventStore) error {
 		}
 	}
 
-	go func(events []models.Event) {
-		if err := store.BatchInsertToClickHouse(events); err != nil {
-			log.Printf("Failed to insert batch to ClickHouse: %v", err)
-			metrics.EventsFailed.WithLabelValues("clickhouse_insert").Inc()
-		}
-	}(decodedEvents)
+	if err := store.BatchInsertToClickHouse(decodedEvents); err != nil {
+		log.Printf("Failed to insert batch to ClickHouse: %v", err)
+		metrics.EventsFailed.WithLabelValues("clickhouse_insert").Inc()
+		return err
+	}
 
 	if err := store.BatchCreateUserEventMaps(allUserMaps); err != nil {
 		log.Printf("Failed to create user event maps: %v", err)
@@ -172,9 +188,14 @@ func processAggregatedBatch(store EventStore) error {
 
 	for _, event := range decodedEvents {
 		if jsonBytes, err := json.Marshal(event); err == nil {
-			go func(ctx context.Context, data []byte, id int64) {
-				_ = store.PushToRecentFeed(ctx, data, id)
-			}(database.Ctx, jsonBytes, event.ID)
+			if err := store.PushToRecentFeed(database.Ctx, jsonBytes, event.ID); err != nil {
+				log.Printf("Failed to push event %d to recent feed: %v", event.ID, err)
+				return err
+			}
+			if err := store.PublishEvent(database.Ctx, jsonBytes); err != nil {
+				log.Printf("Failed to publish event %d: %v", event.ID, err)
+				return err
+			}
 		}
 	}
 

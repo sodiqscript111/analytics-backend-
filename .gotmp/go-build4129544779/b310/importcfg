@@ -1,0 +1,19 @@
+# import config
+packagefile context=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\b4\b4183b72b01ee34c104f2643ea9dc36e464f79f396a677679e635b2811db203c-d
+packagefile database/sql=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\0d\0d379b0ffca7f80e7cca6005a4ca6a26ba406f3882e1e4c31b2e44f15c7e19e0-d
+packagefile database/sql/driver=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\da\daec39447a40e57b3b613c15740c3322c59d5f0e2e0cd932d986bc4ae677ad9d-d
+packagefile encoding/json=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\ef\ef224f26b95fa1070d909134b1a46a45abd5f642d57d809f245e3451417a1637-d
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
+packagefile github.com/jinzhu/now=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\ae\ae5df66753b27a2da86866f6fcdf886053157a8c197fe2bf69e7f8e0bca977c7-d
+packagefile gorm.io/gorm/clause=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\22\221431f62a6a15c1997e8657088174fe8691cf092b97b40c68d701fa843c7bc4-d
+packagefile gorm.io/gorm/logger=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\0f\0f4d931f702eacfa296104eb73d407957de80d43517191f101ebfd0eadad1c68-d
+packagefile gorm.io/gorm/schema=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4129544779\b315\_pkg_.a
+packagefile gorm.io/gorm/utils=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\b0\b0966bef0ed86ee45094cd28317db1bc34b1d2b38786d5ccb6d4565ee34aeebc-d
+packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
+packagefile regexp=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c6\c6a33f88a8982fd4bc8ad69c12a463b4ccb3aa2ae3e9f342bb8711182490c079-d
+packagefile sort=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c8\c83b16b45b0c0680efdd365194e1609507e3a01feed17a7c803fd04c0c881bb2-d
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
+packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d
+packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c0\c0551600e2e3bb397c29fcf9657ed0b6e5230061afaccb8926d5c4dfa35125c7-d

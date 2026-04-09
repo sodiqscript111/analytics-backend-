@@ -1,0 +1,12 @@
+# import config
+importmap golang.org/x/crypto/chacha20poly1305=vendor/golang.org/x/crypto/chacha20poly1305
+packagefile crypto=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\44\4447618102fffd314baddb23cd8283f8d66d53041adf24fe0a3744e6ed39d2d5-d
+packagefile crypto/aes=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b130\_pkg_.a
+packagefile crypto/cipher=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b083\_pkg_.a
+packagefile crypto/ecdh=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b132\_pkg_.a
+packagefile crypto/hkdf=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b156\_pkg_.a
+packagefile crypto/rand=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b155\_pkg_.a
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile vendor/golang.org/x/crypto/chacha20poly1305=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b163\_pkg_.a
+packagefile internal/byteorder=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\44\447ae375227bff05c80cc59fc37256fe8b8a361ca1d25e0f1fe6f54f2fbc7840-d
+packagefile math/bits=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e8\e8706fb07f48b267a4e23ec4db339c53837c60d3c60d6dbac23dbb70119cf1e1-d

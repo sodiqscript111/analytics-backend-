@@ -21,10 +21,15 @@ func GetRecentFeed(c *gin.Context) {
 	}
 
 	var events []models.Event
+	seenIDs := make(map[int64]bool)
+
 	for _, raw := range rawEvents {
 		var e models.Event
 		if err := json.Unmarshal([]byte(raw), &e); err == nil {
-			events = append(events, e)
+			if !seenIDs[e.ID] {
+				events = append(events, e)
+				seenIDs[e.ID] = true
+			}
 		}
 	}
 

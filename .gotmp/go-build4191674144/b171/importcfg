@@ -1,0 +1,14 @@
+# import config
+packagefile bytes=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f0\f0f9d526fd399ece393495cbca881da350bf4fb26d83b4584dfd0fc6c6dc106a-d
+packagefile crypto/internal/fips140=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e9\e958318874e11914b7b19e3055fd1b3ba14fb49e9fab328583f27a75dea3f46f-d
+packagefile crypto/internal/fips140/bigmod=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\73\73257d1745400f7ee5226c4e5c6a13cc01ad24e4caee47d1081f5914201d2ccd-d
+packagefile crypto/internal/fips140/check=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\14\141a111dec03230f447f906b3ae1f7fe1c6477a66cc80c23560e482dad9bfb72-d
+packagefile crypto/internal/fips140/drbg=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\cb\cb0e7a4230f3de1357c8a2c49284aa3f75c5b0316a6f029e67f41f1c888d9d6d-d
+packagefile crypto/internal/fips140/sha256=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\70\7019f01b2c4f5a47ad801b7f380f2ef5f49212d8866ce2811b8096574aa244cd-d
+packagefile crypto/internal/fips140/sha3=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\4f\4fec46369a2fefd9a8c5cc65f5a921ab1c5673ee9e81fb4c02cea21a5f446269-d
+packagefile crypto/internal/fips140/sha512=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9c\9cdb22d3eda824cf09a5bb3bb65ed78c46bb610fb0a7064ca74f32a8d2666b67-d
+packagefile crypto/internal/fips140/subtle=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\ed\edf249aa1553a5fd29aa41e0cca7f4be57be129dc620bb5bf90451b8f3998fed-d
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile hash=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\77\77ce3c2bd9d2a1450a324643910a82bd2215481716073ffaa56d26bf67406524-d
+packagefile io=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\dd\dd8d6a3c540e927692bd3f654fe43df87f9623763d4b149c75a28e448ff5133d-d
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d

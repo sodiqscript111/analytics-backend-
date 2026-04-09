@@ -1,0 +1,12 @@
+# import config
+packagefile context=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\b4\b4183b72b01ee34c104f2643ea9dc36e464f79f396a677679e635b2811db203c-d
+packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
+packagefile github.com/jackc/pgx/v5=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4129544779\b278\_pkg_.a
+packagefile github.com/jackc/pgx/v5/pgconn=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\27\271aba3d3ccd89c8ecf897811da0976fe3586c7a80cf8bf7d749f259125bec91-d
+packagefile github.com/jackc/puddle/v2=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\d0\d019b0788d02fb74f901ae618caab4e84d5d9d9538780cd48cfe0f11b6c0bffc-d
+packagefile math/rand=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\0b\0be025008c31d53f7c99ac3e3c6e6413f6a94d9ce2020f7ba80d4519e9de5259-d
+packagefile runtime=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\d8\d8ded27fec0d0f65bdd62b623bc8a53f4a4410a5ff9d2e3db0b707a95e1eaf5e-d
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d
+packagefile sync/atomic=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\61\6132922bcaca474f8adaa4a75fb1d759e745edba05aea1cb162595da15eba717-d
+packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c0\c0551600e2e3bb397c29fcf9657ed0b6e5230061afaccb8926d5c4dfa35125c7-d

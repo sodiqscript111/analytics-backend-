@@ -1,0 +1,5 @@
+# import config
+packagefile crypto/cipher=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b083\_pkg_.a
+packagefile crypto/internal/boring=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b082\_pkg_.a
+packagefile crypto/internal/fips140/aes=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\87\87561a4ad61e18806199d3049dd4287686e00abe2f68475800d028f3d04e5451-d
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d

@@ -1,0 +1,14 @@
+# import config
+packagefile bufio=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\0a\0a977f005d1a2f0b2737ea507a521ce6fcddda0b6072b44c4d9cf58859856491-d
+packagefile context=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\b4\b4183b72b01ee34c104f2643ea9dc36e464f79f396a677679e635b2811db203c-d
+packagefile internal/fuzz=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b078\_pkg_.a
+packagefile internal/testlog=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a5be04154eeb34bb6ebc20073ed0fa8ba99c3379a2dbfb8dd980e3c2f0f899a1-d
+packagefile io=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\dd\dd8d6a3c540e927692bd3f654fe43df87f9623763d4b149c75a28e448ff5133d-d
+packagefile os=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\24\24d2f90ded35e12caf40b55bbb600a5ba661275ad0182e13eb9cd22e15a1b23f-d
+packagefile os/signal=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\08\08f2062857315a676d93fe8776c7e4b24cddd6eba8cbcde3c3a96d80870cee37-d
+packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
+packagefile regexp=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c6\c6a33f88a8982fd4bc8ad69c12a463b4ccb3aa2ae3e9f342bb8711182490c079-d
+packagefile runtime/pprof=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b119\_pkg_.a
+packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d
+packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c0\c0551600e2e3bb397c29fcf9657ed0b6e5230061afaccb8926d5c4dfa35125c7-d

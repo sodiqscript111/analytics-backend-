@@ -1,0 +1,14 @@
+# import config
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b004\_pkg_.a
+packagefile internal/asan=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b024\_pkg_.a
+packagefile internal/bytealg=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b011\_pkg_.a
+packagefile internal/itoa=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b041\_pkg_.a
+packagefile internal/msan=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b025\_pkg_.a
+packagefile internal/oserror=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b042\_pkg_.a
+packagefile internal/race=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f4\f49943a547fe7e8a5cb8f0cb66869478f16fd8d271a511990876851b76610cd4-d
+packagefile internal/syscall/windows/sysdll=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b034\_pkg_.a
+packagefile runtime=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b010\_pkg_.a
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b036\_pkg_.a
+packagefile sync/atomic=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b038\_pkg_.a
+packagefile unicode/utf16=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b043\_pkg_.a
+packagefile unicode/utf8=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b044\_pkg_.a

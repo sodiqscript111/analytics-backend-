@@ -1,0 +1,6 @@
+# import config
+packagefile crypto/internal/fips140/check=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b088\_pkg_.a
+packagefile crypto/internal/fips140/subtle=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b095\_pkg_.a
+packagefile crypto/internal/fips140deps/byteorder=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b091\_pkg_.a
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b004\_pkg_.a
+packagefile math/bits=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b051\_pkg_.a

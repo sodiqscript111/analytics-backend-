@@ -1,0 +1,18 @@
+# import config
+packagefile bufio=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\0a\0a977f005d1a2f0b2737ea507a521ce6fcddda0b6072b44c4d9cf58859856491-d
+packagefile bytes=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f0\f0f9d526fd399ece393495cbca881da350bf4fb26d83b4584dfd0fc6c6dc106a-d
+packagefile crypto/rand=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b155\_pkg_.a
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
+packagefile internal/godebug=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\58\58d809561a30f0bcaaebcc3e890844b364c2349e87b01f208dc94a052ab1f8d6-d
+packagefile io=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\dd\dd8d6a3c540e927692bd3f654fe43df87f9623763d4b149c75a28e448ff5133d-d
+packagefile maps=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\2b\2b344cf5268c806a3e0c43573f3cc55486cced218ca877bb0ef23abe0c177452-d
+packagefile math=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f9\f9c25e434188f7e6f66622987d09aefa920889f848c60880a6e6e632be0a31d1-d
+packagefile mime=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b266\_pkg_.a
+packagefile mime/quotedprintable=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b268\_pkg_.a
+packagefile net/textproto=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b263\_pkg_.a
+packagefile os=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\24\24d2f90ded35e12caf40b55bbb600a5ba661275ad0182e13eb9cd22e15a1b23f-d
+packagefile path/filepath=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\ff\ff372d706fe46868d0bdef8b59af133bd47045aac2cc49b428e73e83a41ac83d-d
+packagefile slices=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f3\f33fab88be41c18734cebd4f4c9af5fa5409c36e4803f16ec8f86bb1153d902f-d
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
+packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d
