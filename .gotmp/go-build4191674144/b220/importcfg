@@ -1,6 +1,0 @@
-# import config
-packagefile encoding/binary=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\1f\1f53c567860b59ce6b257d620738e54fc26c01c992fc54728af5b642013cb1a6-d
-packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
-packagefile github.com/pierrec/lz4/v4/internal/lz4errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\70\701c98e70c1a6d7180d239eb712835bb73c733b8aa1bcacee6ba08f78d1c85f1-d
-packagefile math/bits=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e8\e8706fb07f48b267a4e23ec4db339c53837c60d3c60d6dbac23dbb70119cf1e1-d
-packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d

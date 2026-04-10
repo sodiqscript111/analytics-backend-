@@ -1,2 +1,0 @@
-def github.com/segmentio/asm/bswap.swap64 ABI0
-ref github.com/segmentio/asm/cpu.X86 ABI0

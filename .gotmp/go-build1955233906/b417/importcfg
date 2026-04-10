@@ -1,6 +1,0 @@
-# import config
-packagefile google.golang.org/protobuf/reflect/protoreflect=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b374\_pkg_.a
-packagefile google.golang.org/protobuf/runtime/protoimpl=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b418\_pkg_.a
-packagefile google.golang.org/protobuf/types/known/timestamppb=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b432\_pkg_.a
-packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
-packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d

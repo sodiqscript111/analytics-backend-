@@ -1,7 +1,0 @@
-# import config
-packagefile go/token=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\ea\ead606791e0fb6f7b19a328e1a8ba425d648de27163bf27f4f9cbdbba6262b17-d
-packagefile google.golang.org/protobuf/internal/flags=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e3\e3df1ac6a0b911c60b48880fb4614d5d93fcdc14e253d8b766068f6057fd560c-d
-packagefile google.golang.org/protobuf/reflect/protoreflect=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b374\_pkg_.a
-packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d
-packagefile unicode=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f7\f7551527539df2579c99c859af19989b740a0cf02442a713011595cd20626209-d
-packagefile unicode/utf8=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e6\e6e69fcedd9f0b854eed3370c900871e2db50dd2de2959f5877f5f1e0e95239b-d

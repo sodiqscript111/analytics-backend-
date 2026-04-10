@@ -1,9 +1,0 @@
-# import config
-packagefile bytes=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b064\_pkg_.a
-packagefile crypto/internal/fips140=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b085\_pkg_.a
-packagefile crypto/internal/fips140/check=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b088\_pkg_.a
-packagefile crypto/internal/fips140/hmac=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b089\_pkg_.a
-packagefile crypto/internal/fips140/sha256=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b090\_pkg_.a
-packagefile crypto/internal/fips140/sha512=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b096\_pkg_.a
-packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b004\_pkg_.a
-packagefile hash=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b081\_pkg_.a

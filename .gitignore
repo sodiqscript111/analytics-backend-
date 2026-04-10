@@ -1,5 +1,7 @@
 .idea/
 .terraform/
+.gocache/
+.gotmp/
 *.exe
 *.log
 *.txt

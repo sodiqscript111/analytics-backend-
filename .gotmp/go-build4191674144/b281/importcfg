@@ -1,6 +1,0 @@
-# import config
-packagefile container/list=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c8\c8aeb01faafc32d4e4827d7e3ad6596fa21c54fff68241b16a2ff4a817533724-d
-packagefile crypto/sha256=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b079\_pkg_.a
-packagefile encoding/hex=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b177\_pkg_.a
-packagefile github.com/jackc/pgx/v5/pgconn=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b282\_pkg_.a
-packagefile math=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f9\f9c25e434188f7e6f66622987d09aefa920889f848c60880a6e6e632be0a31d1-d

@@ -1,8 +1,0 @@
-# import config
-packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b004\_pkg_.a
-packagefile internal/bytealg=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b011\_pkg_.a
-packagefile internal/stringslite=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b030\_pkg_.a
-packagefile internal/syscall/windows=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b033\_pkg_.a
-packagefile io/fs=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b045\_pkg_.a
-packagefile slices=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b048\_pkg_.a
-packagefile syscall=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1864332604\b040\_pkg_.a

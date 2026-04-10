@@ -1,8 +1,0 @@
-# import config
-packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b004\_pkg_.a
-packagefile internal/bytealg=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b011\_pkg_.a
-packagefile io=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b046\_pkg_.a
-packagefile iter=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b050\_pkg_.a
-packagefile math/bits=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b051\_pkg_.a
-packagefile unicode=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b062\_pkg_.a
-packagefile unicode/utf8=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build3134412533\b044\_pkg_.a

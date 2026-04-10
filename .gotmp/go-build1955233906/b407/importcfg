@@ -1,6 +1,0 @@
-# import config
-packagefile golang.org/x/net/idna=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b408\_pkg_.a
-packagefile net=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\50\5084280ec753990e8a136516a062b6e2c75325eee81cde3d83a9d4ec97e7d85d-d
-packagefile net/textproto=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\92\922367182ac32741edef6469db4885a06f5dc372b7e7fcd1e25c724aa3ba7fb2-d
-packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d
-packagefile unicode/utf8=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e6\e6e69fcedd9f0b854eed3370c900871e2db50dd2de2959f5877f5f1e0e95239b-d

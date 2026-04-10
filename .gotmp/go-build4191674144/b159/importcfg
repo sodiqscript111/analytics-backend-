@@ -1,9 +1,0 @@
-# import config
-packagefile bytes=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f0\f0f9d526fd399ece393495cbca881da350bf4fb26d83b4584dfd0fc6c6dc106a-d
-packagefile crypto/internal/fips140=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e9\e958318874e11914b7b19e3055fd1b3ba14fb49e9fab328583f27a75dea3f46f-d
-packagefile crypto/internal/fips140/check=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\14\141a111dec03230f447f906b3ae1f7fe1c6477a66cc80c23560e482dad9bfb72-d
-packagefile crypto/internal/fips140/drbg=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\cb\cb0e7a4230f3de1357c8a2c49284aa3f75c5b0316a6f029e67f41f1c888d9d6d-d
-packagefile crypto/internal/fips140/sha3=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\4f\4fec46369a2fefd9a8c5cc65f5a921ab1c5673ee9e81fb4c02cea21a5f446269-d
-packagefile crypto/internal/fips140/subtle=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\ed\edf249aa1553a5fd29aa41e0cca7f4be57be129dc620bb5bf90451b8f3998fed-d
-packagefile crypto/internal/fips140deps/byteorder=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\1d\1ddcd4939f12ac51d33eac62e474d5ddbb59ee5bcefdd3aa1667b64e4bc2fc5c-d
-packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d

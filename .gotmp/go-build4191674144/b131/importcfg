@@ -1,8 +1,0 @@
-# import config
-packagefile crypto/cipher=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b083\_pkg_.a
-packagefile crypto/internal/fips140/alias=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\97\97b453a6bc1f5123616a3800ca78234e0ccebfbcf53acc17d0d331aefe35a225-d
-packagefile crypto/internal/fips140only=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\2d\2d7250138c2bca616e87b317ee49b90f021398dadf4f0fb5014159fd43ea5d43-d
-packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
-packagefile internal/byteorder=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\44\447ae375227bff05c80cc59fc37256fe8b8a361ca1d25e0f1fe6f54f2fbc7840-d
-packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
-packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d

@@ -1,9 +1,0 @@
-# import config
-importmap golang.org/x/crypto/cryptobyte/asn1=vendor/golang.org/x/crypto/cryptobyte/asn1
-packagefile encoding/asn1=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b149\_pkg_.a
-packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
-packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
-packagefile vendor/golang.org/x/crypto/cryptobyte/asn1=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\23\23735e47fa82a22a786a6a4ae08a8942ab10870b7f7101826895b48b1d91aa57-d
-packagefile math/big=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b139\_pkg_.a
-packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
-packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c0\c0551600e2e3bb397c29fcf9657ed0b6e5230061afaccb8926d5c4dfa35125c7-d

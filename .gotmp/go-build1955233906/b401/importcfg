@@ -1,8 +1,0 @@
-# import config
-packagefile crypto/cipher=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\99\996b7c42fc07b5bbfa1e57ffa333982c994a34de8b128fdd4e2f9a6b6786864c-d
-packagefile encoding/binary=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\1f\1f53c567860b59ce6b257d620738e54fc26c01c992fc54728af5b642013cb1a6-d
-packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
-packagefile golang.org/x/crypto/chacha20=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b399\_pkg_.a
-packagefile golang.org/x/crypto/internal/alias=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\48\482b66a774122d8f4df515f268f0f51e7a943fe5fcf2c63c887d2fe494f9f66c-d
-packagefile golang.org/x/crypto/internal/poly1305=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\49\49f4cf3d6250529af858fbbe9afb9f8d5da0685c0c10522ffdb36091db2d2c29-d
-packagefile golang.org/x/sys/cpu=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\ce\cefa052c7ffbd6ad8fe06d9bdbce47e32f0bf4f148be30ca25ddb8a5ed046880-d

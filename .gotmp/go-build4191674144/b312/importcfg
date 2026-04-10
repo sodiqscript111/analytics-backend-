@@ -1,7 +1,0 @@
-# import config
-packagefile database/sql=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b205\_pkg_.a
-packagefile database/sql/driver=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b206\_pkg_.a
-packagefile go/ast=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b109\_pkg_.a
-packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
-packagefile sort=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c8\c83b16b45b0c0680efdd365194e1609507e3a01feed17a7c803fd04c0c881bb2-d
-packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d

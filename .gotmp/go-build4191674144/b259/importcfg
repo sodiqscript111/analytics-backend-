@@ -1,7 +1,0 @@
-# import config
-importmap golang.org/x/text/transform=vendor/golang.org/x/text/transform
-importmap golang.org/x/text/unicode/bidi=vendor/golang.org/x/text/unicode/bidi
-packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
-packagefile vendor/golang.org/x/text/transform=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\4d\4d623eadcf684f7aa22801ff66e4cc01757ac19900ce6bd78582f0d5a9cea3db-d
-packagefile vendor/golang.org/x/text/unicode/bidi=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build4191674144\b261\_pkg_.a
-packagefile unicode/utf8=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e6\e6e69fcedd9f0b854eed3370c900871e2db50dd2de2959f5877f5f1e0e95239b-d
