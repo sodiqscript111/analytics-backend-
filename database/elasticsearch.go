@@ -312,7 +312,12 @@ func (c *ElasticsearchClient) ensureIndex(ctx context.Context) error {
 	return nil
 }
 
-func (c *ElasticsearchClient) bulkIndexEvents(ctx context.Context, events []models.Event) error {
+func (c *ElasticsearchClient) bulkIndexEvents(ctx context.Context, events []models.Event) (err error) {
+	started := time.Now()
+	defer func() {
+		observeDBOperation("elasticsearch", "bulk_index", c.index, started, err)
+	}()
+
 	var payload bytes.Buffer
 
 	for _, event := range events {
@@ -356,23 +361,30 @@ func (c *ElasticsearchClient) bulkIndexEvents(ctx context.Context, events []mode
 
 	if resp.StatusCode >= 300 {
 		body, _ := io.ReadAll(resp.Body)
-		return fmt.Errorf("bulk index request failed: %s", strings.TrimSpace(string(body)))
+		err = fmt.Errorf("bulk index request failed: %s", strings.TrimSpace(string(body)))
+		return err
 	}
 
 	var result struct {
 		Errors bool `json:"errors"`
 	}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return err
 	}
 	if result.Errors {
-		return fmt.Errorf("bulk index completed with item errors")
+		err = fmt.Errorf("bulk index completed with item errors")
+		return err
 	}
 
 	return nil
 }
 
-func (c *ElasticsearchClient) searchEvents(ctx context.Context, params SearchEventsParams) (*SearchEventsResponse, error) {
+func (c *ElasticsearchClient) searchEvents(ctx context.Context, params SearchEventsParams) (response *SearchEventsResponse, err error) {
+	started := time.Now()
+	defer func() {
+		observeDBOperation("elasticsearch", "search", c.index, started, err)
+	}()
+
 	requestedSize := params.Size
 	if requestedSize <= 0 {
 		requestedSize = 20
@@ -401,7 +413,8 @@ func (c *ElasticsearchClient) searchEvents(ctx context.Context, params SearchEve
 
 	if resp.StatusCode >= 300 {
 		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("search request failed: %s", strings.TrimSpace(string(body)))
+		err = fmt.Errorf("search request failed: %s", strings.TrimSpace(string(body)))
+		return nil, err
 	}
 
 	var result struct {
@@ -416,7 +429,7 @@ func (c *ElasticsearchClient) searchEvents(ctx context.Context, params SearchEve
 			} `json:"hits"`
 		} `json:"hits"`
 	}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return nil, err
 	}
 
@@ -442,13 +455,14 @@ func (c *ElasticsearchClient) searchEvents(ctx context.Context, params SearchEve
 		}
 	}
 
-	return &SearchEventsResponse{
+	response = &SearchEventsResponse{
 		Items:      items,
 		NextCursor: nextCursor,
 		Total:      result.Hits.Total.Value,
 		TookMS:     result.Took,
 		Source:     "elasticsearch",
-	}, nil
+	}
+	return response, nil
 }
 
 func (c *ElasticsearchClient) doRequest(ctx context.Context, method, path string, body io.Reader, headers map[string]string) (*http.Response, error) {

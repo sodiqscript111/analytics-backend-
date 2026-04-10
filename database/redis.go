@@ -4,6 +4,7 @@ import (
 	"analytics-backend/config"
 	"context"
 	"log"
+	"time"
 
 	"github.com/redis/go-redis/v9"
 )
@@ -31,24 +32,20 @@ func InitRedis(cfg config.RedisConfig) {
 	log.Println("Connected to Redis")
 }
 
-// Recent Feed Helpers
-
 func PushToRecentFeed(ctx context.Context, eventJSON []byte, snowflakeID int64) error {
+	started := time.Now()
 	pipe := Rdb.Pipeline()
 
-	// Add to Sorted Set with Snowflake ID as score
-	// Snowflake IDs are integers that are time-ordered.
 	pipe.ZAdd(ctx, "events:recent", redis.Z{
 		Score:  float64(snowflakeID),
 		Member: eventJSON,
 	})
 
-	// Keep only top 50 most recent events
 	pipe.ZRemRangeByRank(ctx, "events:recent", 0, -51)
 
 	_, err := pipe.Exec(ctx)
+	observeRedisOperation("push_recent_feed", "events:recent", started, err)
 
-	// Handle potential key type mismatch if switching from List to ZSet
 	if err != nil && err.Error() == "WRONGTYPE Operation against a key holding the wrong kind of value" {
 		log.Println("Detected key type mismatch for events:recent, deleting old key...")
 		Rdb.Del(ctx, "events:recent")
@@ -59,10 +56,15 @@ func PushToRecentFeed(ctx context.Context, eventJSON []byte, snowflakeID int64) 
 }
 
 func GetRecentFeed(ctx context.Context) ([]string, error) {
-	// Get top 50 most recent events (highest scores -> newest events)
-	return Rdb.ZRevRange(ctx, "events:recent", 0, 49).Result()
+	started := time.Now()
+	results, err := Rdb.ZRevRange(ctx, "events:recent", 0, 49).Result()
+	observeRedisOperation("read_recent_feed", "events:recent", started, err)
+	return results, err
 }
 
 func PublishEvent(ctx context.Context, eventJSON []byte) error {
-	return Rdb.Publish(ctx, "events:stream", eventJSON).Err()
+	started := time.Now()
+	err := Rdb.Publish(ctx, "events:stream", eventJSON).Err()
+	observeRedisOperation("publish_event", "events:stream", started, err)
+	return err
 }

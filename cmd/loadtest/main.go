@@ -77,13 +77,11 @@ func main() {
 		Timeout: 5 * time.Second,
 	}
 
-	// Stop timer
 	go func() {
 		time.Sleep(*duration)
 		close(done)
 	}()
 
-	// Stats printer
 	go func() {
 		ticker := time.NewTicker(1 * time.Second)
 		defer ticker.Stop()

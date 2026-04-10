@@ -12,8 +12,6 @@ var (
 	once sync.Once
 )
 
-// InitSnowflake initializes the snowflake node.
-// nodeID should be unique for each running instance of the application (0-1023).
 func InitSnowflake(nodeID int64) {
 	once.Do(func() {
 		var err error
@@ -24,7 +22,6 @@ func InitSnowflake(nodeID int64) {
 	})
 }
 
-// GenerateID returns a new snowflake ID.
 func GenerateID() int64 {
 	if node == nil {
 		log.Println("Snowflake node not initialized, initializing with default node ID 1")

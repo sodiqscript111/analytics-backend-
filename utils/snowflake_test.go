@@ -6,10 +6,8 @@ import (
 )
 
 func TestInitSnowflake(t *testing.T) {
-	// Initialize snowflake node
 	InitSnowflake(1)
 
-	// Generate an ID
 	id := GenerateID()
 
 	if id <= 0 {

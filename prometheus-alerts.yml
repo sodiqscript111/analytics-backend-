@@ -1,0 +1,38 @@
+groups:
+  - name: analytics-backend
+    rules:
+      - alert: AnalyticsHighStreamBacklog
+        expr: max(analytics_stream_backlog) > 1000
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: Redis stream backlog is high
+          description: A Redis consumer group has more than 1000 pending messages for at least 10 minutes.
+
+      - alert: AnalyticsIngestionFailuresSpike
+        expr: increase(analytics_events_failed_total[5m]) > 25
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Event failures are spiking
+          description: More than 25 failed event operations were recorded in the last 5 minutes.
+
+      - alert: AnalyticsNoActiveWorkers
+        expr: sum(analytics_active_workers) < 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: No active analytics workers detected
+          description: No aggregator or indexer workers are currently reporting as active.
+
+      - alert: AnalyticsSearchIndexFailures
+        expr: increase(analytics_search_index_failures_total[10m]) > 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: Search indexing failures detected
+          description: Search indexing has reported one or more failures in the last 10 minutes.

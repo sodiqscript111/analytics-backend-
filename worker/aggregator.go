@@ -82,11 +82,11 @@ func (s *DefaultEventStore) PublishEvent(ctx context.Context, data []byte) error
 
 func StartAggregatorWorker(workerName string, store EventStore) {
 	log.Printf("Starting aggregator worker %s...", workerName)
-	metrics.ActiveWorkers.Inc()
-	defer metrics.ActiveWorkers.Dec()
+	metrics.ActiveWorkers.WithLabelValues("aggregator").Inc()
+	defer metrics.ActiveWorkers.WithLabelValues("aggregator").Dec()
 
 	for {
-		metrics.WorkerIterations.Inc()
+		metrics.WorkerIterations.WithLabelValues("aggregator").Inc()
 		if err := processAggregatedBatch(store); err != nil {
 			metrics.EventsFailed.WithLabelValues("aggregation").Inc()
 			log.Printf("Error processing aggregated batch: %v", err)

@@ -21,7 +21,6 @@ func GetEvent(c *gin.Context) {
 		return
 	}
 
-	// Generate Snowflake ID
 	event.ID = utils.GenerateID()
 	if event.Timestamp.IsZero() {
 		event.Timestamp = time.Now()

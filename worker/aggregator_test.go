@@ -10,7 +10,6 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-// MockEventStore implements EventStore for testing
 type MockEventStore struct {
 	ReadFromGroupFunc               func() ([]redis.XMessage, error)
 	BatchAddToDatabaseFunc          func(events []models.Event) error
@@ -117,7 +116,6 @@ func TestProcessAggregatedBatch_Success(t *testing.T) {
 			if aggEvents[0].Count != 2 {
 				t.Errorf("Expected count 2, got %d", aggEvents[0].Count)
 			}
-			// Simulate DB assigning ID
 			aggEvents[0].ID = 100
 			return nil
 		},

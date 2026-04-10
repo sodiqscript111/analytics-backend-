@@ -29,6 +29,7 @@ func EnqueueEventsForIndexing(ctx context.Context, events []models.Event) error 
 		return nil
 	}
 
+	started := time.Now()
 	pipe := Rdb.Pipeline()
 	for _, event := range events {
 		pipe.XAdd(ctx, &redis.XAddArgs{
@@ -48,10 +49,12 @@ func EnqueueEventsForIndexing(ctx context.Context, events []models.Event) error 
 	if err != nil {
 		log.Printf("Failed to enqueue index jobs: %v", err)
 	}
+	observeRedisOperation("enqueue_index_jobs", IndexStreamName, started, err)
 	return err
 }
 
 func ReadIndexJobsFromGroup(consumer string) ([]redis.XMessage, error) {
+	started := time.Now()
 	results, err := Rdb.XReadGroup(Ctx, &redis.XReadGroupArgs{
 		Group:    IndexGroupName,
 		Consumer: consumer,
@@ -62,9 +65,11 @@ func ReadIndexJobsFromGroup(consumer string) ([]redis.XMessage, error) {
 	}).Result()
 	if err != nil {
 		if err == redis.Nil {
+			observeRedisOperation("read_index_jobs", IndexStreamName, started, nil)
 			return []redis.XMessage{}, nil
 		}
 		log.Printf("Failed to read index jobs: %v", err)
+		observeRedisOperation("read_index_jobs", IndexStreamName, started, err)
 		return nil, err
 	}
 
@@ -72,6 +77,7 @@ func ReadIndexJobsFromGroup(consumer string) ([]redis.XMessage, error) {
 	for _, stream := range results {
 		messages = append(messages, stream.Messages...)
 	}
+	observeRedisOperation("read_index_jobs", IndexStreamName, started, nil)
 	return messages, nil
 }
 
@@ -80,9 +86,11 @@ func AckIndexJobs(ids ...string) error {
 		return nil
 	}
 
+	started := time.Now()
 	err := Rdb.XAck(Ctx, IndexStreamName, IndexGroupName, ids...).Err()
 	if err != nil {
 		log.Printf("Failed to acknowledge index jobs: %v", err)
 	}
+	observeRedisOperation("ack_index_jobs", IndexStreamName, started, err)
 	return err
 }

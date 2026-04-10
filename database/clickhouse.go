@@ -36,7 +36,6 @@ func InitClickHouse(cfg config.ClickHouseConfig) {
 		log.Fatalf("Failed to ping ClickHouse: %v", err)
 	}
 
-	// Create table
 	schema := `
 	CREATE TABLE IF NOT EXISTS events (
 		user_id String,
@@ -58,16 +57,21 @@ func InitClickHouse(cfg config.ClickHouseConfig) {
 }
 
 func InsertToClickHouse(ctx context.Context, userID, action, element string, duration float64, timestamp time.Time) error {
+	started := time.Now()
 	batch, err := CH.PrepareBatch(ctx, "INSERT INTO events")
 	if err != nil {
+		observeDBOperation("clickhouse", "prepare_batch", "events", started, err)
 		return err
 	}
 
 	if err := batch.Append(userID, action, element, duration, timestamp); err != nil {
+		observeDBOperation("clickhouse", "append", "events", started, err)
 		return err
 	}
 
-	return batch.Send()
+	err = batch.Send()
+	observeDBOperation("clickhouse", "insert", "events", started, err)
+	return err
 }
 
 func BatchInsertToClickHouse(events []models.Event) error {
@@ -75,19 +79,24 @@ func BatchInsertToClickHouse(events []models.Event) error {
 		return nil
 	}
 
+	started := time.Now()
 	ctx := context.Background()
 	batch, err := CH.PrepareBatch(ctx, "INSERT INTO events")
 	if err != nil {
+		observeDBOperation("clickhouse", "prepare_batch", "events", started, err)
 		return err
 	}
 
 	for _, e := range events {
 		if err := batch.Append(e.UserId, e.Action, e.Element, e.Duration, e.Timestamp); err != nil {
+			observeDBOperation("clickhouse", "append", "events", started, err)
 			return err
 		}
 	}
 
-	return batch.Send()
+	err = batch.Send()
+	observeDBOperation("clickhouse", "batch_insert", "events", started, err)
+	return err
 }
 
 type ClickHouseAnalytics struct {
@@ -97,6 +106,7 @@ type ClickHouseAnalytics struct {
 }
 
 func GetAnalyticsFromClickHouse(ctx context.Context) ([]ClickHouseAnalytics, error) {
+	started := time.Now()
 	var results []ClickHouseAnalytics
 	query := `
 		SELECT 
@@ -108,7 +118,9 @@ func GetAnalyticsFromClickHouse(ctx context.Context) ([]ClickHouseAnalytics, err
 		ORDER BY count DESC
 	`
 	if err := CH.Select(ctx, &results, query); err != nil {
+		observeDBOperation("clickhouse", "select", "events", started, err)
 		return nil, err
 	}
+	observeDBOperation("clickhouse", "select", "events", started, nil)
 	return results, nil
 }

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"analytics-backend/database"
+	"analytics-backend/metrics"
 	"context"
 	"fmt"
 	"strconv"
@@ -12,6 +13,14 @@ import (
 )
 
 func SearchEvents(c *gin.Context) {
+	started := time.Now()
+	status := "success"
+	source := "elasticsearch"
+	defer func() {
+		metrics.SearchQueries.WithLabelValues(status, source).Inc()
+		metrics.SearchQueryDuration.WithLabelValues(status, source).Observe(time.Since(started).Seconds())
+	}()
+
 	ctx, cancel := context.WithTimeout(c.Request.Context(), 5*time.Second)
 	defer cancel()
 
@@ -28,6 +37,7 @@ func SearchEvents(c *gin.Context) {
 	if from := strings.TrimSpace(c.Query("from")); from != "" {
 		parsed, err := parseSearchTime(from)
 		if err != nil {
+			status = "invalid_request"
 			c.JSON(400, gin.H{"error": "invalid from timestamp"})
 			return
 		}
@@ -37,6 +47,7 @@ func SearchEvents(c *gin.Context) {
 	if to := strings.TrimSpace(c.Query("to")); to != "" {
 		parsed, err := parseSearchTime(to)
 		if err != nil {
+			status = "invalid_request"
 			c.JSON(400, gin.H{"error": "invalid to timestamp"})
 			return
 		}
@@ -45,8 +56,12 @@ func SearchEvents(c *gin.Context) {
 
 	results, err := database.SearchEvents(ctx, params)
 	if err != nil {
+		status = "error"
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
+	}
+	if results != nil && results.Source != "" {
+		source = results.Source
 	}
 
 	c.JSON(200, results)

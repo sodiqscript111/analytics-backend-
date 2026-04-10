@@ -18,7 +18,6 @@ func GetAnalyticsClickHouse(c *gin.Context) {
 		return
 	}
 
-	// Transform for frontend consistency if needed, or return direct
 	response := make(map[string]interface{})
 	actionCounts := make(map[string]uint64)
 	var totalDuration float64

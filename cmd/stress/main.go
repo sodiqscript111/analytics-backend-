@@ -65,7 +65,6 @@ func main() {
 		maxLatency   int64
 	)
 
-	// ---- Phase 1: Ingest Events ----
 	fmt.Println("Phase 1: Ingesting events...")
 	start := time.Now()
 
@@ -138,7 +137,6 @@ func main() {
 	fmt.Printf("  Max Latency: %.2f ms\n", float64(atomic.LoadInt64(&maxLatency))/1000.0)
 	fmt.Println("------------------------------------")
 
-	// ---- Phase 2: Query Endpoints ----
 	fmt.Println()
 	fmt.Println("Phase 2: Querying analytics endpoints...")
 	fmt.Println()

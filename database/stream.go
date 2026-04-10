@@ -21,6 +21,7 @@ func AddToStream(stream models.Event) error {
 }
 
 func AddToStreamWithContext(ctx context.Context, stream models.Event) error {
+	started := time.Now()
 	_, err := Rdb.XAdd(ctx, &redis.XAddArgs{
 		Stream: StreamName,
 		Values: map[string]interface{}{
@@ -36,6 +37,7 @@ func AddToStreamWithContext(ctx context.Context, stream models.Event) error {
 	if err != nil {
 		log.Printf("Failed to add to stream: %v", err)
 	}
+	observeRedisOperation("add_to_stream", StreamName, started, err)
 
 	return err
 }
@@ -49,6 +51,7 @@ func EnsureConsumerGroup() error {
 }
 
 func ReadFromGroup(consumer string) ([]redis.XMessage, error) {
+	started := time.Now()
 	results, err := Rdb.XReadGroup(Ctx, &redis.XReadGroupArgs{
 		Group:    GroupName,
 		Consumer: consumer,
@@ -61,9 +64,11 @@ func ReadFromGroup(consumer string) ([]redis.XMessage, error) {
 	if err != nil {
 
 		if err == redis.Nil {
+			observeRedisOperation("read_group", StreamName, started, nil)
 			return []redis.XMessage{}, nil
 		}
 		log.Printf("Failed to read from group: %v", err)
+		observeRedisOperation("read_group", StreamName, started, err)
 		return nil, err
 	}
 
@@ -71,6 +76,7 @@ func ReadFromGroup(consumer string) ([]redis.XMessage, error) {
 	for _, stream := range results {
 		messages = append(messages, stream.Messages...)
 	}
+	observeRedisOperation("read_group", StreamName, started, nil)
 	return messages, nil
 }
 
@@ -79,18 +85,22 @@ func AckMessage(ids ...string) error {
 		return nil
 	}
 
+	started := time.Now()
 	err := Rdb.XAck(Ctx, StreamName, GroupName, ids...).Err()
 	if err != nil {
 		log.Printf("Failed to acknowledge messages: %v", err)
 	}
+	observeRedisOperation("ack_group", StreamName, started, err)
 
 	return err
 }
 
 func CheckStreamLength(stream string) (int64, error) {
+	started := time.Now()
 	length, err := Rdb.XLen(Ctx, stream).Result()
 	if err != nil {
 		log.Printf("Failed to check stream length: %v", err)
 	}
+	observeRedisOperation("stream_length", stream, started, err)
 	return length, err
 }

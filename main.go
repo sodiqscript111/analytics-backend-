@@ -23,7 +23,6 @@ import (
 var ctx = context.Background()
 
 func main() {
-	// Load Configuration
 	cfg, err := config.LoadConfig("config.yaml")
 	if err != nil {
 		log.Fatalf("Failed to load config: %v", err)
@@ -44,6 +43,7 @@ func main() {
 		log.Fatalf("Failed to create indexer group: %v", err)
 	}
 	log.Println("Consumer group created successfully")
+	go database.StartMetricsCollector(ctx)
 
 	log.Println("Starting 4 background workers...")
 	for i := 0; i < 4; i++ {
@@ -60,7 +60,6 @@ func main() {
 
 	router := gin.Default()
 
-	// CORS middleware — allow frontend to reach the API
 	router.Use(func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*")
 		c.Header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -72,12 +71,10 @@ func main() {
 		c.Next()
 	})
 
-	// Add Prometheus middleware
 	router.Use(metrics.PrometheusMiddleware())
 
 	router.MaxMultipartMemory = 32 << 20
 
-	// Metrics endpoint for Prometheus scraping
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	router.POST("/event", handlers.GetEvent)

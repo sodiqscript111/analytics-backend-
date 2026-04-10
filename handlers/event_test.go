@@ -14,7 +14,6 @@ func TestGetEvent_BadRequest(t *testing.T) {
 	r := gin.Default()
 	r.POST("/event", GetEvent)
 
-	// Test with invalid JSON
 	req, _ := http.NewRequest("POST", "/event", bytes.NewBufferString("invalid json"))
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
@@ -24,7 +23,3 @@ func TestGetEvent_BadRequest(t *testing.T) {
 		t.Errorf("Expected status 400, got %d", w.Code)
 	}
 }
-
-// Note: TestGetEvent_Success requires mocking database.AddToStreamWithContext
-// which is currently a direct call to a global function.
-// For now, we verify that invalid input is handled correctly.

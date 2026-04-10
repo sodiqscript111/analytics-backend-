@@ -88,6 +88,7 @@ services:
     container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus-alerts.yml:/etc/prometheus/prometheus-alerts.yml
       - prometheus_data:/prometheus
     ports:
       - "9090:9090"
@@ -106,6 +107,8 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - ./grafana/dashboard-provider.yaml:/etc/grafana/provisioning/dashboards/dashboard-provider.yaml
+      - ./grafana/analytics-observability-dashboard.json:/var/lib/grafana/dashboards/analytics-observability-dashboard.json
     depends_on:
       - prometheus
       - clickhouse
