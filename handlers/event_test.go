@@ -16,6 +16,7 @@ func TestGetEvent_BadRequest(t *testing.T) {
 
 	// Test with invalid JSON
 	req, _ := http.NewRequest("POST", "/event", bytes.NewBufferString("invalid json"))
+	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 

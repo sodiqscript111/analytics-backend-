@@ -1,0 +1,10 @@
+{
+	"Patterns": {
+		"meta.yml": [
+			"meta.yml"
+		]
+	},
+	"Files": {
+		"meta.yml": "C:\\Users\\Owner\\go\\pkg\\mod\\github.com\\!click!house\\clickhouse-go\\v2@v2.43.0\\resources\\meta.yml"
+	}
+}

@@ -34,6 +34,7 @@ type EventStore interface {
 	BatchCreateAggregatedEvents(aggEvents []*models.AggregatedEvent) error
 	BatchInsertToClickHouse(events []models.Event) error
 	BatchCreateUserEventMaps(userMaps []models.UserEventMap) error
+	EnqueueEventsForIndexing(ctx context.Context, events []models.Event) error
 	PushToRecentFeed(ctx context.Context, data []byte, id int64) error
 	PublishEvent(ctx context.Context, data []byte) error
 	AckMessage(ids ...string) error
@@ -61,6 +62,10 @@ func (s *DefaultEventStore) BatchInsertToClickHouse(events []models.Event) error
 
 func (s *DefaultEventStore) BatchCreateUserEventMaps(userMaps []models.UserEventMap) error {
 	return database.BatchCreateUserEventMaps(userMaps)
+}
+
+func (s *DefaultEventStore) EnqueueEventsForIndexing(ctx context.Context, events []models.Event) error {
+	return database.EnqueueEventsForIndexing(ctx, events)
 }
 
 func (s *DefaultEventStore) PushToRecentFeed(ctx context.Context, data []byte, id int64) error {
@@ -197,6 +202,10 @@ func processAggregatedBatch(store EventStore) error {
 				return err
 			}
 		}
+	}
+
+	if err := store.EnqueueEventsForIndexing(database.Ctx, decodedEvents); err != nil {
+		log.Printf("Failed to enqueue events for indexing: %v", err)
 	}
 
 	if err := store.AckMessage(messageIDs...); err != nil {

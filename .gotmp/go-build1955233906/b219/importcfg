@@ -1,0 +1,26 @@
+# import config
+packagefile bytes=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f0\f0f9d526fd399ece393495cbca881da350bf4fb26d83b4584dfd0fc6c6dc106a-d
+packagefile database/sql=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\0d\0d379b0ffca7f80e7cca6005a4ca6a26ba406f3882e1e4c31b2e44f15c7e19e0-d
+packagefile database/sql/driver=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\da\daec39447a40e57b3b613c15740c3322c59d5f0e2e0cd932d986bc4ae677ad9d-d
+packagefile encoding=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\ef\efdb78defc23d9e2f14fc9fafbf733ebe7f76fdc67958884132517421ef81423-d
+packagefile encoding/binary=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\1f\1f53c567860b59ce6b257d620738e54fc26c01c992fc54728af5b642013cb1a6-d
+packagefile encoding/json=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\ef\ef224f26b95fa1070d909134b1a46a45abd5f642d57d809f245e3451417a1637-d
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
+packagefile github.com/ClickHouse/ch-go/proto=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b199\_pkg_.a
+packagefile github.com/ClickHouse/clickhouse-go/v2/lib/binary=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\6b\6bc6d1ffc5cb0eecb27012bc3bb21911e7d0d50634cf9ee3b460567ad224fcf2-d
+packagefile github.com/ClickHouse/clickhouse-go/v2/lib/chcol=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a9\a9b26bb26363e189b35ee74a7d5f30d55ae68bdc0fb9c6c3f3af124b17c37a12-d
+packagefile github.com/ClickHouse/clickhouse-go/v2/lib/timezone=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\02\0204afdef375d037718df3a0de8f57f8dfc1ce9c241917fb8ec32efeb2ee75e0-d
+packagefile github.com/google/uuid=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e1\e16a6decb622222eb3b59c7c0238fcac35ef2754c8f1e991c2c079e21b24b8b2-d
+packagefile github.com/paulmach/orb=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\da\da7b76fcf797463fd01d29d42b72541566046b5e915eaf4c8743d3e9ad4a1883-d
+packagefile github.com/shopspring/decimal=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\8f\8f9fee633e73554d51f86faa75bc6e2eefae781e1951636f26ad61a567744553-d
+packagefile math=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f9\f9c25e434188f7e6f66622987d09aefa920889f848c60880a6e6e632be0a31d1-d
+packagefile math/big=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e6\e68e6d4e7261df81394134f77222ccd1a8c4ce15c239fce1ebf00def4fc89024-d
+packagefile net=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\50\5084280ec753990e8a136516a062b6e2c75325eee81cde3d83a9d4ec97e7d85d-d
+packagefile net/netip=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\11\11517de7d1d3986c5080d074ef4756a633fc8ad32104750176f48b9e38f17dff-d
+packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
+packagefile regexp=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c6\c6a33f88a8982fd4bc8ad69c12a463b4ccb3aa2ae3e9f342bb8711182490c079-d
+packagefile slices=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f3\f33fab88be41c18734cebd4f4c9af5fa5409c36e4803f16ec8f86bb1153d902f-d
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
+packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d
+packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c0\c0551600e2e3bb397c29fcf9657ed0b6e5230061afaccb8926d5c4dfa35125c7-d

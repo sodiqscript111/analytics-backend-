@@ -32,10 +32,16 @@ func main() {
 	database.InitRedis(cfg.Redis)
 	database.Initdb(cfg.Postgres)
 	database.InitClickHouse(cfg.ClickHouse)
+	if err := database.InitElasticsearch(cfg.Elasticsearch); err != nil {
+		log.Fatalf("Failed to initialize Elasticsearch: %v", err)
+	}
 	utils.InitSnowflake(1)
 
 	if err := database.EnsureConsumerGroup(); err != nil {
 		log.Fatalf("Failed to create consumer group: %v", err)
+	}
+	if err := database.EnsureIndexerGroup(); err != nil {
+		log.Fatalf("Failed to create indexer group: %v", err)
 	}
 	log.Println("Consumer group created successfully")
 
@@ -44,6 +50,12 @@ func main() {
 		workerName := fmt.Sprintf("worker-%d", i+1)
 		eventStore := &worker.DefaultEventStore{Consumer: workerName}
 		go worker.StartAggregatorWorker(workerName, eventStore)
+	}
+	log.Println("Starting 2 search indexer workers...")
+	for i := 0; i < 2; i++ {
+		workerName := fmt.Sprintf("indexer-%d", i+1)
+		indexStore := &worker.DefaultIndexStore{Consumer: workerName}
+		go worker.StartSearchIndexerWorker(workerName, indexStore)
 	}
 
 	router := gin.Default()
@@ -72,6 +84,7 @@ func main() {
 	router.GET("/events", handlers.FetchEvents)
 	router.GET("/events/recent", handlers.GetRecentFeed)
 	router.GET("/events/stream", handlers.GetEventsStream)
+	router.GET("/search/events", handlers.SearchEvents)
 	router.GET("/analytics/clickhouse", handlers.GetAnalyticsClickHouse)
 	router.GET("/analytics/sequential", handlers.GetAnalyticsSequential)
 	router.GET("/analytics/mapreduce", handlers.GetAnalyticsMapReduce)

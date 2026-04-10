@@ -1,7 +1,8 @@
 "use client";
-import * as React from "react";
 
-import { ChartBar, Forklift, Gauge, GraduationCap, LayoutDashboard, Search, ShoppingBag } from "lucide-react";
+import * as React from "react";
+import { Activity, LayoutDashboard, Search } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,66 +13,193 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
+  CommandShortcut,
 } from "@/components/ui/command";
+import {
+  API_BASE,
+  buildSearchParams,
+  type EventItem,
+  type SearchEventsResponse,
+} from "@/lib/analytics-dashboard";
 
-const searchItems = [
-  { group: "Dashboards", icon: LayoutDashboard, label: "Default" },
-  { group: "Dashboards", icon: ChartBar, label: "CRM", disabled: true },
-  { group: "Dashboards", icon: Gauge, label: "Analytics", disabled: true },
-  { group: "Dashboards", icon: ShoppingBag, label: "E-Commerce", disabled: true },
-  { group: "Dashboards", icon: GraduationCap, label: "Academy", disabled: true },
-  { group: "Dashboards", icon: Forklift, label: "Logistics", disabled: true },
-  { group: "Authentication", label: "Login v1" },
-  { group: "Authentication", label: "Login v2" },
-  { group: "Authentication", label: "Register v1" },
-  { group: "Authentication", label: "Register v2" },
+const staticItems = [
+  {
+    group: "Navigation",
+    label: "Realtime Dashboard",
+    href: "/dashboard/default",
+    icon: LayoutDashboard,
+  },
 ];
 
+function formatTimeLabel(timestamp: string): string {
+  const parsed = new Date(timestamp);
+  if (Number.isNaN(parsed.getTime())) {
+    return "recent";
+  }
+
+  return parsed.toLocaleTimeString("en-US", {
+    hour12: false,
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+async function searchEvents(query: string, signal?: AbortSignal): Promise<EventItem[]> {
+  if (!query.trim()) return [];
+
+  const params = buildSearchParams(
+    {
+      query,
+      action: "",
+      userId: "",
+      from: "",
+      to: "",
+    },
+    undefined,
+    8,
+  );
+
+  const res = await fetch(`${API_BASE}/search/events?${params.toString()}`, {
+    cache: "no-store",
+    signal,
+  });
+  if (!res.ok) {
+    return [];
+  }
+
+  const payload = (await res.json()) as SearchEventsResponse;
+  return payload.items;
+}
+
 export function SearchDialog() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const [open, setOpen] = React.useState(false);
+  const [query, setQuery] = React.useState("");
+  const [results, setResults] = React.useState<EventItem[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((open) => !open);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() === "j" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        setOpen((current) => !current);
       }
     };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    if (!query.trim()) {
+      setResults([]);
+      setIsLoading(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(async () => {
+      setIsLoading(true);
+      const items = await searchEvents(query, controller.signal);
+      setResults(items);
+      setIsLoading(false);
+    }, 300);
+
+    return () => {
+      controller.abort();
+      window.clearTimeout(timeout);
+    };
+  }, [open, query]);
+
+  const openDashboardSearch = React.useCallback(
+    (searchQuery: string) => {
+      const params = new URLSearchParams();
+      if (searchQuery) {
+        params.set("q", searchQuery);
+      }
+
+      const target = params.toString()
+        ? `/dashboard/default?${params.toString()}`
+        : "/dashboard/default";
+
+      router.push(target);
+      setOpen(false);
+    },
+    [router],
+  );
 
   return (
     <>
       <Button
-        variant="link"
-        className="!px-0 font-normal text-muted-foreground hover:no-underline"
+        variant="outline"
+        size="sm"
+        className="gap-2"
         onClick={() => setOpen(true)}
       >
         <Search className="size-4" />
         Search
-        <kbd className="inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium text-[10px]">
-          <span className="text-xs">⌘</span>J
+        <kbd className="rounded border bg-muted px-1.5 text-[10px] font-medium">
+          Ctrl/Cmd+J
         </kbd>
       </Button>
+
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search dashboards, users, and more…" />
+        <CommandInput
+          value={query}
+          onValueChange={setQuery}
+          placeholder="Search events, ids, users, or actions..."
+        />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          {[...new Set(searchItems.map((item) => item.group))].map((group, i) => (
-            <React.Fragment key={group}>
-              {i !== 0 && <CommandSeparator />}
-              <CommandGroup heading={group} key={group}>
-                {searchItems
-                  .filter((item) => item.group === group)
-                  .map((item) => (
-                    <CommandItem className="!py-1.5" key={item.label} onSelect={() => setOpen(false)}>
-                      {item.icon && <item.icon />}
-                      <span>{item.label}</span>
-                    </CommandItem>
-                  ))}
-              </CommandGroup>
-            </React.Fragment>
-          ))}
+          <CommandEmpty>
+            {isLoading ? "Searching events..." : "No matching dashboard items"}
+          </CommandEmpty>
+
+          <CommandGroup heading="Navigation">
+            {staticItems.map((item) => (
+              <CommandItem
+                key={item.label}
+                value={item.label}
+                onSelect={() => {
+                  router.push(item.href);
+                  setOpen(false);
+                }}
+              >
+                <item.icon />
+                <span>{item.label}</span>
+                {pathname === item.href ? (
+                  <CommandShortcut>Open</CommandShortcut>
+                ) : null}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+
+          {query.trim() ? <CommandSeparator /> : null}
+
+          {query.trim() ? (
+            <CommandGroup heading="Events">
+              {results.map((event) => (
+                <CommandItem
+                  key={event.id}
+                  value={`${event.id} ${event.user_id} ${event.action} ${event.element}`}
+                  onSelect={() => openDashboardSearch(String(event.id))}
+                >
+                  <Activity />
+                  <div className="flex min-w-0 flex-1 flex-col">
+                    <span className="truncate font-medium">
+                      {event.action} • {event.element}
+                    </span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      {event.user_id} · {formatTimeLabel(event.timestamp)}
+                    </span>
+                  </div>
+                  <CommandShortcut>{event.id}</CommandShortcut>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          ) : null}
         </CommandList>
       </CommandDialog>
     </>

@@ -1,0 +1,5 @@
+# import config
+packagefile embed=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\4f\4f5651730aa78f27a0fbc9c4e2c85bad4275b8ec81eb90c9bd0492611fa12dec-d
+packagefile github.com/ClickHouse/clickhouse-go/v2/lib/proto=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b225\_pkg_.a
+packagefile go.yaml.in/yaml/v3=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\15\15ea9a061a8f08440ab0e8c3f2a9ac96463ff218adfd6a13a616d1ede9f37238-d
+packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d

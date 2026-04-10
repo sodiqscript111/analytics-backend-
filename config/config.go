@@ -8,10 +8,11 @@ import (
 )
 
 type Config struct {
-	Server     ServerConfig     `yaml:"server"`
-	Redis      RedisConfig      `yaml:"redis"`
-	Postgres   PostgresConfig   `yaml:"postgres"`
-	ClickHouse ClickHouseConfig `yaml:"clickhouse"`
+	Server        ServerConfig        `yaml:"server"`
+	Redis         RedisConfig         `yaml:"redis"`
+	Postgres      PostgresConfig      `yaml:"postgres"`
+	ClickHouse    ClickHouseConfig    `yaml:"clickhouse"`
+	Elasticsearch ElasticsearchConfig `yaml:"elasticsearch"`
 }
 
 type ServerConfig struct {
@@ -40,6 +41,13 @@ type ClickHouseConfig struct {
 	Database string   `yaml:"database"`
 	Username string   `yaml:"username"`
 	Password string   `yaml:"password"`
+}
+
+type ElasticsearchConfig struct {
+	Addr     string `yaml:"addr"`
+	Index    string `yaml:"index"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
 }
 
 var AppConfig *Config

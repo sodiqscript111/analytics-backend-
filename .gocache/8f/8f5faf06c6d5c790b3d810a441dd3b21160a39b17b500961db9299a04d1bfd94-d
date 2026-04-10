@@ -1,0 +1,4 @@
+./aggregator.go
+./indexer.go
+./aggregator_test.go
+./indexer_test.go

@@ -113,3 +113,21 @@ func GetUserEvents(userID string) ([]models.AggregatedEvent, error) {
 		Find(&events)
 	return events, result.Error
 }
+
+func FindEventsInBatches(batchSize int, fn func([]models.Event) error) error {
+	if batchSize <= 0 {
+		batchSize = 100
+	}
+
+	var events []models.Event
+
+	return DB.
+		Model(&models.Event{}).
+		Order("timestamp asc").
+		FindInBatches(&events, batchSize, func(tx *gorm.DB, batch int) error {
+			if len(events) == 0 {
+				return nil
+			}
+			return fn(append([]models.Event(nil), events...))
+		}).Error
+}

@@ -1,0 +1,6 @@
+# import config
+packagefile github.com/gin-gonic/gin=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b324\_pkg_.a
+packagefile github.com/prometheus/client_golang/prometheus=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b413\_pkg_.a
+packagefile github.com/prometheus/client_golang/prometheus/promauto=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b439\_pkg_.a
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
+packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c0\c0551600e2e3bb397c29fcf9657ed0b6e5230061afaccb8926d5c4dfa35125c7-d

@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp, Activity, Zap, Database } from "lucide-react";
+import { Activity, Database, TrendingUp, Zap } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -11,8 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import type { AnalyticsData } from "../page";
+import type { AnalyticsData } from "@/lib/analytics-dashboard";
 
 interface SectionCardsProps {
   analytics: AnalyticsData | null;
@@ -24,14 +23,14 @@ export function SectionCards({ analytics }: SectionCardsProps) {
   const uniqueActions = analytics?.action_counts
     ? Object.keys(analytics.action_counts).length
     : 0;
-  const processingType = analytics?.processing_type ?? "—";
+  const processingType = analytics?.processing_type ?? "-";
 
   return (
-    <div className="grid @5xl/main:grid-cols-4 @xl/main:grid-cols-2 grid-cols-1 gap-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs dark:*:data-[slot=card]:bg-card">
+    <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs dark:*:data-[slot=card]:bg-card">
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Total Events</CardDescription>
-          <CardTitle className="font-semibold @[250px]/card:text-3xl text-2xl tabular-nums">
+          <CardTitle className="text-2xl tabular-nums font-semibold @[250px]/card:text-3xl">
             {totalEvents.toLocaleString()}
           </CardTitle>
           <CardAction>
@@ -54,7 +53,7 @@ export function SectionCards({ analytics }: SectionCardsProps) {
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Avg Duration</CardDescription>
-          <CardTitle className="font-semibold @[250px]/card:text-3xl text-2xl tabular-nums">
+          <CardTitle className="text-2xl tabular-nums font-semibold @[250px]/card:text-3xl">
             {avgDuration.toFixed(2)}ms
           </CardTitle>
           <CardAction>
@@ -77,7 +76,7 @@ export function SectionCards({ analytics }: SectionCardsProps) {
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Unique Actions</CardDescription>
-          <CardTitle className="font-semibold @[250px]/card:text-3xl text-2xl tabular-nums">
+          <CardTitle className="text-2xl tabular-nums font-semibold @[250px]/card:text-3xl">
             {uniqueActions}
           </CardTitle>
           <CardAction>
@@ -92,7 +91,7 @@ export function SectionCards({ analytics }: SectionCardsProps) {
             Distinct action types <TrendingUp className="size-4" />
           </div>
           <div className="text-muted-foreground">
-            click, scroll, hover, submit, etc.
+            click, scroll, hover, submit, and navigation events
           </div>
         </CardFooter>
       </Card>
@@ -100,7 +99,7 @@ export function SectionCards({ analytics }: SectionCardsProps) {
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Processing Engine</CardDescription>
-          <CardTitle className="font-semibold @[250px]/card:text-3xl text-2xl tabular-nums capitalize">
+          <CardTitle className="text-2xl tabular-nums font-semibold capitalize @[250px]/card:text-3xl">
             {processingType}
           </CardTitle>
           <CardAction>
@@ -115,7 +114,7 @@ export function SectionCards({ analytics }: SectionCardsProps) {
             Analytics engine type
           </div>
           <div className="text-muted-foreground">
-            Go + Redis + ClickHouse + Postgres
+            Go + Redis + ClickHouse + Postgres + Elasticsearch
           </div>
         </CardFooter>
       </Card>

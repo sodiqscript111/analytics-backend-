@@ -1,0 +1,13 @@
+# import config
+packagefile context=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\b4\b4183b72b01ee34c104f2643ea9dc36e464f79f396a677679e635b2811db203c-d
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
+packagefile golang.org/x/net/http/httpguts=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b407\_pkg_.a
+packagefile golang.org/x/net/http2/hpack=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\16\16ca173bc5e35a6989ae86ad4c5efaac5526a0bfeefd6c285e1294e5dda53be7-d
+packagefile net/http/httptrace=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\53\53113cf25b7cca7ba89ec486463466b08cac4b87b1c46c9b6b8f5dbfc3d86f73-d
+packagefile net/textproto=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\92\922367182ac32741edef6469db4885a06f5dc372b7e7fcd1e25c724aa3ba7fb2-d
+packagefile net/url=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f1\f19b6d9aa9f5ed5cb5e447ee1dd5427189d3490b42951fe53fe3a9a0f6ace771-d
+packagefile sort=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c8\c83b16b45b0c0680efdd365194e1609507e3a01feed17a7c803fd04c0c881bb2-d
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
+packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d

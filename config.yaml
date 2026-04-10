@@ -22,3 +22,9 @@ clickhouse:
   database: "default"
   username: "testing"
   password: "testing"
+
+elasticsearch:
+  addr: "http://localhost:9200"
+  index: "events-search"
+  username: ""
+  password: ""

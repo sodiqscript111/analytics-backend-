@@ -1,0 +1,21 @@
+# import config
+packagefile bytes=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\f0\f0f9d526fd399ece393495cbca881da350bf4fb26d83b4584dfd0fc6c6dc106a-d
+packagefile encoding/xml=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\94\9400f1bf6a0920ec7face72ed21a3903d049254eba9ca8d34412fdacf151dcab-d
+packagefile errors=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\80\8044b4c077c539b6e90ff9e4d0197f0c48f0c117813fd08e52b761257fd99e41-d
+packagefile fmt=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9d\9dbda6e832b423d90ca1c95ac9172eccafed6efaeed208ed6a80a0c79adc0121-d
+packagefile github.com/gin-gonic/gin/codec/json=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\6f\6fea8de95e0a6a542ecfd1190c7d13d92931daf7c0e2cac68d3e9850f2be50ad-d
+packagefile github.com/gin-gonic/gin/internal/bytesconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\61\61c8117510d7d863aca423739872847fd4bf04dd6263bb5b279d25834b6955cc-d
+packagefile github.com/go-playground/validator/v10=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\67\677b18bd4644e9942345ac858ab50bad5df376e802a82595539a7a475ca6bb99-d
+packagefile github.com/goccy/go-yaml=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\9c\9c5ab40f48d5a037a23bf6d4017430c4ae2b189305d1dd98e95deb8064fe2513-d
+packagefile github.com/pelletier/go-toml/v2=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\7a\7af7bb8c0af51f7b07de1a9c4eb93a6eccbd8e6b6843d42c26d8cc6cc1e6f711-d
+packagefile github.com/ugorji/go/codec=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b361\_pkg_.a
+packagefile google.golang.org/protobuf/proto=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b368\_pkg_.a
+packagefile io=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\dd\dd8d6a3c540e927692bd3f654fe43df87f9623763d4b149c75a28e448ff5133d-d
+packagefile mime/multipart=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\e0\e0a2ffd69948221a673e3a0a84a6466785e51cd11276d42ac27a58c032db3103-d
+packagefile net/http=C:\Users\Owner\GolandProjects\analytics-backend\.gotmp\go-build1955233906\b232\_pkg_.a
+packagefile net/textproto=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\92\922367182ac32741edef6469db4885a06f5dc372b7e7fcd1e25c724aa3ba7fb2-d
+packagefile reflect=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\a5\a54936ab5aac77a5cc72c9c5bb6fd88aeb39e62077db748221fef5869ad35292-d
+packagefile strconv=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\3f\3f234232dacf33a8ad1915ecae2866501227e43ee673d71499dfd0f52af54ee1-d
+packagefile strings=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\66\6645e12e1f8b109c5a45aea4ea5919430c735ffd4ebba6c0531951579e9a3498-d
+packagefile sync=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\09\09c2923ed3c8240439feccf8199974e0f1b6541a484686ca0538f9a17719d7a7-d
+packagefile time=C:\Users\Owner\GolandProjects\analytics-backend\.gocache\c0\c0551600e2e3bb397c29fcf9657ed0b6e5230061afaccb8926d5c4dfa35125c7-d

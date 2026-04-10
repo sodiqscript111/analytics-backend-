@@ -1,0 +1,8 @@
+./analytics.go
+./clickhouse_analytics.go
+./event.go
+./feed.go
+./metric.go
+./search.go
+./sse.go
+./event_test.go

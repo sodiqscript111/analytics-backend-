@@ -43,6 +43,8 @@ services:
     depends_on:
       - redis
       - db
+      - clickhouse
+      - elasticsearch
     restart: on-failure
     networks:
       - app-network
@@ -66,6 +68,20 @@ services:
       nofile:
         soft: 262144
         hard: 262144
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.3
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - app-network
 
   prometheus:
     image: prom/prometheus:latest
@@ -100,6 +116,7 @@ volumes:
   postgres_data:
   redis_data:
   clickhouse_data:
+  elasticsearch_data:
   prometheus_data:
   grafana_data:
 

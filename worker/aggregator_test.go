@@ -17,6 +17,7 @@ type MockEventStore struct {
 	BatchCreateAggregatedEventsFunc func(aggEvents []*models.AggregatedEvent) error
 	BatchInsertToClickHouseFunc     func(events []models.Event) error
 	BatchCreateUserEventMapsFunc    func(userMaps []models.UserEventMap) error
+	EnqueueEventsForIndexingFunc    func(ctx context.Context, events []models.Event) error
 	PushToRecentFeedFunc            func(ctx context.Context, data []byte, id int64) error
 	PublishEventFunc                func(ctx context.Context, data []byte) error
 	AckMessageFunc                  func(ids ...string) error
@@ -53,6 +54,13 @@ func (m *MockEventStore) BatchInsertToClickHouse(events []models.Event) error {
 func (m *MockEventStore) BatchCreateUserEventMaps(userMaps []models.UserEventMap) error {
 	if m.BatchCreateUserEventMapsFunc != nil {
 		return m.BatchCreateUserEventMapsFunc(userMaps)
+	}
+	return nil
+}
+
+func (m *MockEventStore) EnqueueEventsForIndexing(ctx context.Context, events []models.Event) error {
+	if m.EnqueueEventsForIndexingFunc != nil {
+		return m.EnqueueEventsForIndexingFunc(ctx, events)
 	}
 	return nil
 }
@@ -125,6 +133,12 @@ func TestProcessAggregatedBatch_Success(t *testing.T) {
 			}
 			if userMaps[0].AggregatedEventID != 100 {
 				t.Errorf("Expected AggregatedEventID 100, got %d", userMaps[0].AggregatedEventID)
+			}
+			return nil
+		},
+		EnqueueEventsForIndexingFunc: func(ctx context.Context, events []models.Event) error {
+			if len(events) != 2 {
+				t.Errorf("Expected 2 index events, got %d", len(events))
 			}
 			return nil
 		},
@@ -207,5 +221,47 @@ func TestProcessAggregatedBatch_DoesNotAckOnClickHouseFailure(t *testing.T) {
 	}
 	if acked {
 		t.Fatal("expected messages to remain unacked on clickhouse failure")
+	}
+}
+
+func TestProcessAggregatedBatch_AcksEvenWhenIndexEnqueueFails(t *testing.T) {
+	acked := false
+	mockStore := &MockEventStore{
+		ReadFromGroupFunc: func() ([]redis.XMessage, error) {
+			return []redis.XMessage{
+				{
+					ID: "1-0",
+					Values: map[string]interface{}{
+						"id":        "123",
+						"user_id":   "user1",
+						"action":    "click",
+						"element":   "button1",
+						"timestamp": time.Now().Format(time.RFC3339),
+					},
+				},
+			}, nil
+		},
+		BatchCreateAggregatedEventsFunc: func(aggEvents []*models.AggregatedEvent) error {
+			aggEvents[0].ID = 100
+			return nil
+		},
+		EnqueueEventsForIndexingFunc: func(ctx context.Context, events []models.Event) error {
+			return errors.New("queue down")
+		},
+		PublishEventFunc: func(ctx context.Context, data []byte) error {
+			return nil
+		},
+		AckMessageFunc: func(ids ...string) error {
+			acked = true
+			return nil
+		},
+	}
+
+	err := processAggregatedBatch(mockStore)
+	if err != nil {
+		t.Fatalf("expected enqueue failure to be non-fatal, got %v", err)
+	}
+	if !acked {
+		t.Fatal("expected messages to be acked even when indexing enqueue fails")
 	}
 }
